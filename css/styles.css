@@ -92,8 +92,8 @@ body {
 }
 @media screen and (max-width: 800px) {
   .box {
-    height:300px;
-	margin-top:-150px;
+    height:350px;
+	margin-top:-175px;
   }
 }
 
