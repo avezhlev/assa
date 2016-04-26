@@ -2,8 +2,7 @@
 
 	class Utils {
 		
-		/**************************************************
-		**************************************************/
+		
 		static function startsWith($haystack, $needle) {
 			
 			$length = strlen($needle);
