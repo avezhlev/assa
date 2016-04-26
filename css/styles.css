@@ -1,0 +1,149 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  background: #2b2b2b;
+}
+
+.wrapper {
+  margin: 0 auto;
+  padding: 40px;
+  max-width: 1800px;
+}
+.wrapper.small {
+  padding: 20px 50px 20px 50px;
+}
+
+.table {
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  display: table;
+  border-spacing: 2px;
+}
+@media screen and (max-width: 800px) {
+  .table {
+    display: block;
+  }
+}
+
+.row {
+  display: table-row;
+  color: #3b3b3b;
+  background: #f6f6f6;
+}
+.row:nth-of-type(odd) {
+  background: #e9e9e9;
+}
+.row.header {
+  font-weight: 900;
+  color: #ffffff;
+}
+.row.blue {
+  background: #2980b9;
+}
+.row.green {
+  background: #27ae60;
+}
+@media screen and (max-width: 800px) {
+  .row {
+    padding: 8px 0;
+    display: block;
+    border-style: solid; 
+	border-width: 1px;
+	border-color: #2b2b2b;
+  }
+}
+
+.cell {
+  padding: 6px 12px;
+  display: table-cell;
+}
+.cell.small {
+  padding: 2px 12px;
+}
+.cell.nowrap {
+  white-space: nowrap
+}
+@media screen and (max-width: 800px) {
+  .cell {
+    padding: 2px 12px;
+    display: block;
+  }
+}
+
+.box {
+  border: 1px solid white;
+  text-align: center;
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:400px;
+  height:250px;
+  margin-left:-200px;
+  margin-top:-125px;
+}
+@media screen and (max-width: 800px) {
+  .box {
+    height:300px;
+	margin-top:-150px;
+  }
+}
+
+.treeCSS, 
+.treeCSS ul,
+.treeCSS li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.treeCSS ul {
+  margin: 0 0 0 .5em;
+}
+.treeCSS > li:not(:only-child),
+.treeCSS li li {
+  position: relative;
+  padding: .2em 0 0 1.2em;
+}
+.treeCSS li:not(:last-child) {
+  border-left: 1px solid;
+}
+.treeCSS li li:before,
+.treeCSS > li:not(:only-child):before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.1em;
+  height: 0.9em;
+  border-bottom: 1px solid;
+}
+.treeCSS li:last-child:before {
+  width: calc(1.1em - 1px);
+  border-left: 1px solid;
+}
+.treeCSS .drop {
+  position: absolute;
+  left: -.5em;
+  top: .7em;
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
+  text-align: center;
+  background: #2980b9;
+  color: white;
+  font-size: 80%;
+  cursor: pointer;
+}
+.treeCSS li:last-child > .drop {
+  margin-left: 1px;
+}
+.treeCSS .drop + ul {
+  display: none;
+}
+.treeCSS .dropM + ul {
+  display: block;
+}
