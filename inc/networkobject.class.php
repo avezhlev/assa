@@ -10,7 +10,7 @@
 		
 		function NetworkObject($data) {
 			
-			$types = array('object network', 'object-group network', 'host', 'subnet', 'range', 'description', 'nat', 'network-object object', 'group-object');
+			$types = array('object network', 'object-group network', 'host', 'subnet', 'range', 'description', 'nat', 'network-object object', 'network-object', 'group-object');
 			
 			$data = trim($data);
 			
@@ -18,6 +18,7 @@
 				if (Utils::startsWith($data, $type)) {
 					$this->type = $type;
 					$this->name = trim(str_replace($type, '', $data));
+					break;
 				}
 			}
 		}

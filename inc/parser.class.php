@@ -165,21 +165,29 @@
 			if ($type == "group-object") {
 				foreach ($this->network_groups as $group) {
 					if ($group->name == $name) {
-						echo "<li>" . $group->type . " " . $group->name . "<ul>";
-						foreach ($group->children as $child) {
-							$this->showGroupChildWithChildren($child->name, $child->type);
+						echo "<li>" . $group->type . " " . $group->name;
+						if (!empty($group->children)) {
+							echo "<ul>";
+							foreach ($group->children as $child) {
+								$this->showGroupChildWithChildren($child->name, $child->type);
+							}
+							echo "</ul>";
 						}
-						echo "</ul></li>";
+						echo "</li>";
 					}
 				}
 			} else if ($type == "network-object object") {
 				foreach ($this->network_objects as $obj) {
 					if ($obj->name == $name) {
-						echo "<li>" . $obj->type . " " . $obj->name . "<ul>";
-						foreach ($obj->children as $child) {
-							echo "<li>" . $child->type . " " . $child->name . "</li>";
+						echo "<li>" . $obj->type . " " . $obj->name;
+						if (!empty($obj->children)) {
+							echo "<ul>";
+							foreach ($obj->children as $child) {
+								echo "<li>" . $child->type . " " . $child->name . "</li>";
+							}
+							echo "</ul>";
 						}
-						echo "</ul></li>";
+						echo "</li>";
 					}
 				}
 			} else {
@@ -212,11 +220,15 @@
 				
 				if ($this->filters['empty'] || $this->filters['nat'] && $rules || $this->filters['acl'] && $acls) {
 					echo "<div class='row'><div class='cell nowrap'><ul class='treeCSS'>";
-					echo "<li>" . $obj->type . " <b>" . $obj->name . "</b><ul>";
-					foreach ($obj->children as $child) {
-						echo "<li>" . $child->type . " " . $child->name . "</li>";
+					echo "<li>" . $obj->type . " <b>" . $obj->name . "</b>";
+					if (!empty($obj->children)) {
+						echo "<ul>";
+						foreach ($obj->children as $child) {
+							echo "<li>" . $child->type . " " . $child->name . "</li>";
+						}
+						echo "</ul>";
 					}
-					echo "</ul></li></ul></div>";
+					echo "</li></ul></div>";
 					if ($this->filters['nat']) {
 						echo "<div class='cell'>";
 						if ($rules) {
@@ -260,12 +272,15 @@
 				
 				if ($this->filters['empty'] || $this->filters['nat'] && $rules || $this->filters['acl'] && $acls) {
 					echo "<div class='row'><div class='cell nowrap'><ul class='treeCSS'>";
-					echo "<li>" . $group->type . " <b>" . $group->name . "</b><ul>";
-					foreach ($group->children as $child) {
-						$this->showGroupChildWithChildren($child->name, $child->type);
+					echo "<li>" . $group->type . " <b>" . $group->name . "</b>";
+					if (!empty($group->children)) {
+						echo "<ul>";
+						foreach ($group->children as $child) {
+							$this->showGroupChildWithChildren($child->name, $child->type);
+						}					
+						echo "</ul>";
 					}
-					
-					echo "</ul></li></ul></div>";
+					echo "</li></ul></div>";
 					if ($this->filters['nat']) {
 						echo "<div class='cell'>";
 						if ($rules) {
