@@ -15,7 +15,7 @@ body {
   max-width: 1800px;
 }
 .wrapper.small {
-  padding: 20px 50px 20px 50px;
+  padding: 20px 40px 20px 40px;
 }
 
 .table {
@@ -48,6 +48,10 @@ body {
 .row.green {
   background: #27ae60;
 }
+.row.small {
+  font-weight: inherit;
+}
+
 @media screen and (max-width: 800px) {
   .row {
     padding: 8px 0;
@@ -82,9 +86,9 @@ body {
   left:50%;
   top:50%;
   width:400px;
-  height:250px;
+  height:270px;
   margin-left:-200px;
-  margin-top:-125px;
+  margin-top:-135px;
 }
 @media screen and (max-width: 800px) {
   .box {
