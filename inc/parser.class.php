@@ -145,8 +145,6 @@
 				
 				if (Utils::startsWith($data, "nat")) {
 					$this->nat_rules[] = $data;
-				} else if (Utils::startsWith($data, "access-list")) {
-					$this->old_access_lists[] = $data;
 				}
 			
 			}
@@ -170,7 +168,7 @@
 		}
 		
 		
-		
+
 		function mentionedInACL($name) {
 			
 			$results = array();
@@ -292,9 +290,6 @@
 			
 			echo "</div></div>";
 			echo "<script src='js/tree.js'></script>";
-			echo "<pre>";
-			echo var_dump($this->access_lists);
-			echo "</pre>";
 			echo "</body>";
 			
 		}
