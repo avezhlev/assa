@@ -4,7 +4,7 @@
 
 	class AccessList extends CommonContainer {
 		
-		function AccessList($data) {
+		function __construct($data) {
 			
 			$data = trim($data);
 			$used_data = trim(str_replace(_ACL_, "", $data));

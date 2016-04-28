@@ -5,7 +5,7 @@
 
 	class NetworkObject extends CommonContainer {
 		
-		function NetworkObject($data) {
+		function __construct($data) {
 			
 			$types = array("object network", "object-group network", "host", "subnet", "range", "description", "nat", "network-object object", "network-object", "group-object");
 			
