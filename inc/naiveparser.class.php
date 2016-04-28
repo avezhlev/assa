@@ -23,6 +23,7 @@
 
 			$network_object = NULL;
 			$network_group = NULL;
+			$user_groups = NULL;
 			$access_list = NULL;
 			$current_acl = " ";
 	
