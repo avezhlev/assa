@@ -7,6 +7,10 @@
 		private static $tokens;
 		private static $count;
 		private static $index;
+		
+		const BOF_MARK = "BOF";
+		const EOF_MARK = "EOF";
+		const EOL_MARK = "EOL";
 
 		public static function getInstance($file_path = "") {
 			
@@ -22,7 +26,7 @@
 		
 		private function __construct($file_path) {
 
-			self::$tokens = preg_split("/[\s]+/", file_get_contents($file_path));
+			self::$tokens = preg_split("~\s+~", preg_replace("~[\n\r]+~", " " . self::EOL_MARK . " ", file_get_contents($file_path)));
 			self::$count = count(self::$tokens);
 			self::$index = -1;
 		}
@@ -31,7 +35,7 @@
 			if (self::$index < self::$count-1) {
 				return (self::$tokens[++self::$index]);
 			} else {
-				return "EOF";
+				return self::EOF_MARK;
 			}
 		}
 		
@@ -39,8 +43,13 @@
 			if (self::$index > 0) {
 				return (self::$tokens[--self::$index]);
 			} else {
-				return "BOF";
+				self::$index = -1;
+				return self::BOF_MARK;
 			}
+		}
+		
+		public function getToken() {
+			return (self::$tokens[self::$index]);
 		}
 		
 	}

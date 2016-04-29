@@ -5,19 +5,10 @@
 
 	class NetworkObject extends CommonContainer {
 		
-		function __construct($data) {
-			
-			$types = array("object network", "object-group network", "host", "subnet", "range", "description", "nat", "network-object object", "network-object", "group-object");
-			
-			$data = trim($data);
-			
-			foreach ($types as $type) {
-				if (Utils::startsWith($data, $type)) {
-					$this->type = $type;
-					$this->name = trim(str_replace($type, "", $data));
-					break;
-				}
-			}
+		const TYPE = "network object";
+		
+		function __construct($name, $type = self::TYPE) {
+			parent::__construct($name, $type);
 		}
 		
 		function showAsUnorderedList($as_group = false, $objects = array(), $groups = array()) {

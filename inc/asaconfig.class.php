@@ -3,7 +3,6 @@
 	require_once("naiveparser.class.php");
 	require_once("networkobject.class.php");
 	require_once("accesslist.class.php");
-	require_once("filetokenizer.class.php");
 	require_once("utils.class.php");
 
 	class ASAConfig {
@@ -19,13 +18,11 @@
 		
 			$this->filters = $filters;
 			
-			$data = (new NaiveParser)->parse($uploaded_file);
+			$data = NaiveParser::parse($uploaded_file);
 			$this->network_objects = $data['objects'];
 			$this->network_groups = $data['groups'];
 			$this->access_lists = $data['acl'];
 			$this->nat_rules = $data['nat'];
-			
-			$tokenizer = FileTokenizer::getInstance($uploaded_file);
 		}
 		
 		
@@ -157,7 +154,7 @@
 			
 			foreach ($this->access_lists as $acl) {
 				foreach ($acl->children as $child) {
-					if (strpos($child . " ", " " . $name . " ") !== false) {
+					if (strpos($child->name . " ", " " . $name . " ") !== false) {
 						$results[] = $acl;
 						break;
 					}
