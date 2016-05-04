@@ -1,10 +1,10 @@
 <?php
 	
-	require_once("naiveparser.class.php");
-	require_once("networkobject.class.php");
-	require_once("networkgroup.class.php");
-	require_once("user.class.php");
-	require_once("accesslist.class.php");
+	require_once("parsers/naiveparser.class.php");
+	require_once("inc/networkobject.class.php");
+	require_once("inc/networkgroup.class.php");
+	require_once("inc/user.class.php");
+	require_once("inc/accesslist.class.php");
 	require_once("utils.class.php");
 
 	class ASAConfig {

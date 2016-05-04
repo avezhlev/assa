@@ -4,7 +4,7 @@
 	ini_set("display_startup_errors", 1);
 	error_reporting(E_ALL);
 
-	require_once("inc/asaconfig.class.php");
+	require_once("src/asaconfig.class.php");
 
 	$uploads_dir = "/var/www/html/assa/uploads/";
 	$uploaded_file = $uploads_dir . basename($_FILES['userfile']['name']);

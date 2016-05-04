@@ -1,7 +1,6 @@
 <?php
 
 	require_once("commoncontainer.class.php");
-	require_once("utils.class.php");
 
 	class NetworkGroup extends CommonContainer {
 		

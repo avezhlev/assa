@@ -1,9 +1,9 @@
 <?php
 
 	require_once("filetokenizer.class.php");
-	require_once("commonobject.class.php");
-	require_once("networkgroup.class.php");
-	require_once("usergroup.class.php");
+	require_once(__DIR__ . "/../inc/commonobject.class.php");
+	require_once(__DIR__ . "/../inc/networkgroup.class.php");
+	require_once(__DIR__ . "/../inc/usergroup.class.php");
 
 	class ObjectGroupParser {
 		

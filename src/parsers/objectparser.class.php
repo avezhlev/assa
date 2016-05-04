@@ -1,8 +1,8 @@
 <?php
 
 	require_once("filetokenizer.class.php");
-	require_once("commonobject.class.php");
-	require_once("networkobject.class.php");
+	require_once(__DIR__ . "/../inc/commonobject.class.php");
+	require_once(__DIR__ . "/../inc/networkobject.class.php");
 
 	class ObjectParser {
 		
