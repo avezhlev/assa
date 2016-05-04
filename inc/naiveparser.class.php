@@ -2,6 +2,7 @@
 
 	require_once("filetokenizer.class.php");
 	require_once("objectparser.class.php");
+	require_once("objectgroupparser.class.php");
 	require_once("accesslistparser.class.php");
 	require_once("natparser.class.php");
 
@@ -10,6 +11,7 @@
 		static function parse($uploaded_file) {
 			
 			$network_objects = array();
+			$network_groups = array();
 			$access_lists = array();
 			$nat_rules = array();
 		
@@ -22,6 +24,12 @@
 					case ObjectParser::SCOPE:
 						if ($data = ObjectParser::parse()) {
 							$network_objects[] = $data;
+						}
+						break;
+						
+					case ObjectGroupParser::SCOPE:
+						if ($data = ObjectGroupParser::parse()) {
+							$network_groups[] = $data;
 						}
 						break;
 						
@@ -42,7 +50,7 @@
 			}
 			
 			return array('objects' => $network_objects,
-						'groups' => array(),
+						'groups' => $network_groups,
 						'acl' => $access_lists,
 						'nat' => $nat_rules
 						);

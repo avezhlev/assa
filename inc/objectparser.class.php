@@ -8,7 +8,7 @@
 		
 		const SCOPE = "object";
 		const NETWORK_SUBSCOPE = "network";
-		const CHILD_TYPES = array("host", "subnet", "range", "description", "nat");
+		const NETWORK_CHILD_TYPES = array("host", "subnet", "range", "description", "nat");
 		
 		static function parse() {
 			
@@ -29,7 +29,7 @@
 					}
 					$tokenizer->previousToken();
 					return $network_object;
-				}
+			}
 			
 			return false;
 			
@@ -37,7 +37,7 @@
 		
 		static function isNetworkObjectChild($data) {
 			
-			foreach (self::CHILD_TYPES as $type) {
+			foreach (self::NETWORK_CHILD_TYPES as $type) {
 				if ($data === $type) {
 					return true;
 				}
