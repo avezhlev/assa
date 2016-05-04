@@ -20,9 +20,7 @@
 			return self::$instance;
 		}
 		
-		
 		private function __clone() {}
-		
 		
 		private function __construct($file_path) {
 

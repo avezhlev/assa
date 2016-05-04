@@ -3,6 +3,7 @@
 	require_once("filetokenizer.class.php");
 	require_once("commonobject.class.php");
 	require_once("networkgroup.class.php");
+	require_once("usergroup.class.php");
 
 	class ObjectGroupParser {
 		
@@ -10,6 +11,8 @@
 		const NETWORK_SUBSCOPE = "network";
 		const NETWORK_CHILD_TYPES = array("network-object", "group-object", "description");
 		const NETWORK_CHILD_SUBTYPE = "object";
+		const USER_SUBSCOPE = "user";
+		const USER_CHILD_TYPE = "user";
 		
 		static function parse() {
 			
@@ -37,6 +40,23 @@
 					}
 					$tokenizer->previousToken();
 					return $network_group;
+					
+				
+				case self::USER_SUBSCOPE:
+					$user_group = new UserGroup($tokenizer->nextToken());
+					$tokenizer->nextToken();//EOL
+					while (($token = $tokenizer->nextToken()) === self::USER_CHILD_TYPE) {
+						$data = preg_split("~\\\\~", $tokenizer->nextToken());
+						$child_type = $data[0];
+						$child_name = $data[1];
+						while (($token = $tokenizer->nextToken()) !== FileTokenizer::EOL_MARK) {
+							$child_name .= " " . $token;
+						}
+						$user_group->addChild(new CommonObject($child_name, $child_type));
+					}
+					$tokenizer->previousToken();
+					return $user_group;
+					
 			}
 			
 			return false;

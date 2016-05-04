@@ -14,6 +14,7 @@
 			$network_objects = array();
 			$network_groups = array();
 			$users = array();
+			$user_groups = array();
 			$access_lists = array();
 			$nat_rules = array();
 		
@@ -31,7 +32,16 @@
 						
 					case ObjectGroupParser::SCOPE:
 						if ($data = ObjectGroupParser::parse()) {
-							$network_groups[] = $data;
+							switch (true) {
+								
+								case $data instanceof NetworkGroup:
+									$network_groups[] = $data;
+									break;
+									
+								case $data instanceof UserGroup:
+									$user_groups[] = $data;
+									break;
+							}
 						}
 						break;
 						
@@ -60,6 +70,7 @@
 			return array('objects' => $network_objects,
 						'groups' => $network_groups,
 						'users' => $users,
+						'user-groups' => $user_groups,
 						'acl' => $access_lists,
 						'nat' => $nat_rules
 						);

@@ -13,6 +13,7 @@
 		private $network_objects = array();
 		private $network_groups = array();
 		private $users = array();
+		private $user_groups = array();
 		private $access_lists = array();
 		private $nat_rules = array();
 			
@@ -25,6 +26,7 @@
 			$this->network_objects = $data['objects'];
 			$this->network_groups = $data['groups'];
 			$this->users = $data['users'];
+			$this->user_groups = $data['user-groups'];
 			$this->access_lists = $data['acl'];
 			$this->nat_rules = $data['nat'];
 		}
@@ -135,7 +137,7 @@
 			
 			echo "<div class='table'>";
 			
-			echo "<div class='row header green'><div class='cell'>User</div>";
+			echo "<div class='row header green'><div class='cell'>User group</div>";
 			if ($this->filters['nat']) {
 				echo "<div class='cell'>NAT rule</div>";
 			}
@@ -144,15 +146,15 @@
 			}
 			echo "</div>";
 			
-			foreach ($this->users as $user) {
+			foreach ($this->user_groups as $group) {
 				
-				$rules = $this->mentionedInNATRule($user->name);
-				$acls = $this->mentionedInACL($user->name);
+				$rules = $this->mentionedInNATRule($group->name);
+				$acls = $this->mentionedInACL($group->name);
 				
 				if ($this->filters['empty'] || $this->filters['nat'] && $rules || $this->filters['acl'] && $acls) {
 					
 					echo "<div class='row'><div class='cell nowrap'>";
-					$user->showAsUnorderedList();
+					$group->showAsUnorderedList($this->users);
 					echo "</div>";
 					
 					if ($this->filters['nat']) {
