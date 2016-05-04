@@ -52,6 +52,19 @@
 			return (self::$tokens[self::$index]);
 		}
 		
+		public function nextLineStarter() {
+			if (self::$index === -1 || $this->getToken() === self::EOL_MARK) {
+				return $this->nextToken();
+			} else {
+				while (($token = $this->nextToken()) !== self::EOF_MARK) {
+					if ($token === self::EOL_MARK) {
+						return $this->nextToken();
+					}
+				}
+				return self::EOF_MARK;
+			}
+		}
+		
 	}
 	
 ?>

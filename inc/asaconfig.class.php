@@ -31,6 +31,15 @@
 			echo "<head></head>";
 			echo "<body><link href='css/styles.css' rel='stylesheet'>";
 			
+			//debug
+			foreach ($this->access_lists as $acl) {
+				$acl->showAsUnorderedList();
+			}
+			foreach ($this->nat_rules as $rule) {
+				echo $rule . "<br />";
+			}
+			//end of debug
+			
 			echo "<div class='wrapper'><div class='table'>";
 			
 			echo "<div class='row header green'><div class='cell'>Object</div>";

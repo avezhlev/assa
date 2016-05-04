@@ -1,26 +1,20 @@
 <?php
 
-	require_once("commonparser.class.php");
 	require_once("filetokenizer.class.php");
 
-	class NATParser extends CommonParser {
+	class NATParser {
 		
-		const TRIGGER = "nat";
+		const SCOPE = "nat";
 		
 		static function parse() {
-			
-			if (self::isPreviousBOFOrEOL()) {
 				
-				$tokenizer = FileTokenizer::getInstance();
+			$tokenizer = FileTokenizer::getInstance();
 				
-				$nat_rule = self::TRIGGER;
-				while (($token = $tokenizer->nextToken()) !== FileTokenizer::EOL_MARK) {
-					$nat_rule .= " " . $token;
-				}
-				return $nat_rule;
+			$nat_rule = self::SCOPE;
+			while (($token = $tokenizer->nextToken()) !== FileTokenizer::EOL_MARK) {
+				$nat_rule .= " " . $token;
 			}
-			
-			return false;
+			return $nat_rule;
 			
 		}
 	

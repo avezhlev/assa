@@ -15,23 +15,23 @@
 		
 			$tokenizer = FileTokenizer::getInstance($uploaded_file);
 			
-			while (($token = $tokenizer->nextToken()) !== FileTokenizer::EOF_MARK) {
+			while (($token = $tokenizer->nextLineStarter()) !== FileTokenizer::EOF_MARK) {
 				
 				switch ($token) {
 					
-					case ObjectParser::TRIGGER:
+					case ObjectParser::SCOPE:
 						if ($data = ObjectParser::parse()) {
 							$network_objects[] = $data;
 						}
 						break;
 						
-					case AccessListParser::TRIGGER:
+					case AccessListParser::SCOPE:
 						if ($data = AccessListParser::parse()) {
 							$access_lists[] = $data;
 						}
 						break;
 					
-					case NATParser::TRIGGER:
+					case NATParser::SCOPE:
 						if ($data = NATParser::parse()) {
 							$nat_rules[] = $data;
 						}

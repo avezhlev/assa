@@ -1,13 +1,14 @@
 <?php
 
-	require_once("commonparser.class.php");
 	require_once("filetokenizer.class.php");
 	require_once("commonobject.class.php");
 	require_once("networkobject.class.php");
 
-	class ObjectParser extends CommonParser {
+	class ObjectParser {
 		
-		const TRIGGER = "object";
+		const SCOPE = "object";
+		const NETWORK_SUBSCOPE = "network";
+		const CHILD_TYPES = array("host", "subnet", "range", "description", "nat");
 		
 		static function parse() {
 			
@@ -15,7 +16,7 @@
 			
 			switch ($tokenizer->nextToken()) {
 				
-				case "network":
+				case self::NETWORK_SUBSCOPE:
 					$network_object = new NetworkObject($tokenizer->nextToken());
 					$tokenizer->nextToken();//EOL
 					while (self::isNetworkObjectChild($token = $tokenizer->nextToken())) {
@@ -26,8 +27,9 @@
 						}
 						$network_object->addChild(new CommonObject(trim($child_name), $child_type));
 					}
+					$tokenizer->previousToken();
 					return $network_object;
-			}
+				}
 			
 			return false;
 			
@@ -35,10 +37,8 @@
 		
 		static function isNetworkObjectChild($data) {
 			
-			$network_object_children = array("host", "subnet", "range", "description", "nat");
-			
-			foreach ($network_object_children as $child) {
-				if ($data === $child) {
+			foreach (self::CHILD_TYPES as $type) {
+				if ($data === $type) {
 					return true;
 				}
 			}

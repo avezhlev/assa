@@ -5,7 +5,7 @@
 
 	class NetworkObject extends CommonContainer {
 		
-		const TYPE = "network object";
+		const TYPE = "object network";
 		
 		function __construct($name, $type = self::TYPE) {
 			parent::__construct($name, $type);
