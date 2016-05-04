@@ -34,12 +34,54 @@
 		
 		function showData() {
 			
+			$this->showHeader();
+			
+			$this->showTabs();
+			
+			$this->showNetworkObjects();
+			$this->showNetworkGroups();
+			$this->showUsers();
+			$this->showUserGroups();
+			$this->showNATRules();
+			$this->showAccessLists();
+			
+			$this->showFooter();
+		}
+		
+		
+		function showHeader() {
 			echo "<head></head>";
 			echo "<body><link href='css/styles.css' rel='stylesheet'>";
+			echo "<div class='wrapper'>";
+		}
+		
+		
+		function showFooter() {
+			echo "</div>";
+			echo "<script src='js/tree.js'></script>";
+			echo "<script src='js/tabs.js'></script>";
+			echo "</body>";
+		}
+		
+		
+		function showTabs() {
+			echo "<ul class='tab'>
+				<li><a href='javascript:void(0)' class='tablinks active' onclick='showTab(event, \"objects\")'>Network objects</a></li>
+				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"groups\")'>Network groups</a></li>
+				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"users\")'>Users</a></li>
+				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"usergroups\")'>User groups</a></li>
+				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"natrules\")'>NAT rules</a></li>
+				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"accesslists\")'>Access control lists</a></li>
+				</ul><br />";
+		}
+		
+		
+		function showNetworkObjects() {
 			
-			echo "<div class='wrapper'><div class='table'>";
+			echo "<div id='objects' class='tabcontent' style='display: block;'>";
+			echo "<div class='table'>";
 			
-			echo "<div class='row header green'><div class='cell'>Object</div>";
+			echo "<div class='row header blue'><div class='cell'>Object</div>";
 			if ($this->filters['nat']) {
 				echo "<div class='cell'>NAT rule</div>";
 			}
@@ -82,10 +124,12 @@
 					echo "</div>";
 				}
 			}
+			echo "</div></div>";
+		}
+		
+		function showNetworkGroups() {
 			
-			echo "</div><br /><br />";
-			
-			
+			echo "<div id='groups' class='tabcontent'>";
 			echo "<div class='table'>";
 			
 			echo "<div class='row header blue'><div class='cell'>Group</div>";
@@ -131,41 +175,30 @@
 					echo "</div>";
 				}
 			}
+			echo "</div></div>";
+		}
+		
+		
+		function showUsers() {
 			
-			echo "</div><br /><br />";
-			
-			
+			echo "<div id='users' class='tabcontent'>";
 			echo "<div class='table'>";
 			
-			echo "<div class='row header green'><div class='cell'>User group</div>";
-			if ($this->filters['nat']) {
-				echo "<div class='cell'>NAT rule</div>";
-			}
+			echo "<div class='row header green'><div class='cell'>User</div>";
 			if ($this->filters['acl']) {
 				echo "<div class='cell'>ACL</div>";
 			}
 			echo "</div>";
 			
-			foreach ($this->user_groups as $group) {
+			foreach ($this->users as $user) {
 				
-				$rules = $this->mentionedInNATRule($group->name);
-				$acls = $this->mentionedInACL($group->name);
+				$acls = $this->mentionedInACL("LOCAL\\" . $user->name);
 				
-				if ($this->filters['empty'] || $this->filters['nat'] && $rules || $this->filters['acl'] && $acls) {
+				if ($this->filters['empty'] || $this->filters['acl'] && $acls) {
 					
 					echo "<div class='row'><div class='cell nowrap'>";
-					$group->showAsUnorderedList($this->users);
+					$user->showAsUnorderedList();
 					echo "</div>";
-					
-					if ($this->filters['nat']) {
-						echo "<div class='cell'>";
-						if ($rules) {
-							foreach ($rules as $rule) {
-								echo $rule . "<br /><br />";
-							}
-						}
-						echo "</div>";
-					}
 					
 					if ($this->filters['acl']) {
 						echo "<div class='cell nowrap'>";
@@ -180,18 +213,78 @@
 					echo "</div>";
 				}
 			}
-			
-			echo "</div>";
-			
-			
-			
-			echo "</div>";
-			echo "<script src='js/tree.js'></script>";
-			echo "</body>";
-			
+			echo "</div></div>";
 		}
 		
+		
+		function showUserGroups() {
+			
+			echo "<div id='usergroups' class='tabcontent'>";
+			echo "<div class='table'>";
+			
+			echo "<div class='row header green'><div class='cell'>Group</div>";
+			if ($this->filters['acl']) {
+				echo "<div class='cell'>ACL</div>";
+			}
+			echo "</div>";
+			
+			foreach ($this->user_groups as $group) {
+				
+				$acls = $this->mentionedInACL($group->name);
+				
+				if ($this->filters['empty'] || $this->filters['acl'] && $acls) {
+					
+					echo "<div class='row'><div class='cell nowrap'>";
+					$group->showAsUnorderedList($this->users);
+					echo "</div>";
+					
+					if ($this->filters['acl']) {
+						echo "<div class='cell nowrap'>";
+						if ($acls) {
+							foreach ($acls as $acl) {
+								$acl->showAsUnorderedList();
+								echo "<br />";
+							}
+						}
+						echo "</div>";
+					}
+					echo "</div>";
+				}
+			}
+			echo "</div></div>";
+		}
+		
+		
+		function showNATRules() {
+			
+			echo "<div id='natrules' class='tabcontent'>";
+			echo "<div class='table'>";
+			
+			echo "<div class='row header red'><div class='cell'>Rule</div></div>";
+			
+			foreach ($this->nat_rules as $rule) {				
+				echo "<div class='row'><div class='cell'>$rule</div></div>";
+			}
+			echo "</div></div>";
+		}
+		
+		
+		function showAccessLists() {
+			
+			echo "<div id='accesslists' class='tabcontent'>";
+			echo "<div class='table'>";
+			
+			echo "<div class='row header red'><div class='cell'>ACL</div></div>";
+			
+			foreach ($this->access_lists as $acl) {				
+				echo "<div class='row'><div class='cell'>";
+				$acl->showAsUnorderedList();
+				echo "</div></div>";
+			}
+			echo "</div></div>";
+		}
 
+		
 		function mentionedInNATRule($name) {
 			
 			$results = array();

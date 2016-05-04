@@ -4,7 +4,7 @@
   for (var i = 0; i < ul.length; i++) {
     var div = document.createElement('div');
     div.className = 'drop';
-    div.innerHTML = '+'; // картинки лучше выравниваются, т.к. символы на одном браузере ровно выглядят, на другом — чуть съезжают 
+    div.innerHTML = '+';
     ul[i].parentNode.insertBefore(div, ul[i].previousSibling);
     div.onclick = function() {
       this.innerHTML = (this.innerHTML == '+' ? '−' : '+');
