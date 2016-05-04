@@ -3,6 +3,7 @@
 	require_once("filetokenizer.class.php");
 	require_once("objectparser.class.php");
 	require_once("objectgroupparser.class.php");
+	require_once("userparser.class.php");
 	require_once("accesslistparser.class.php");
 	require_once("natparser.class.php");
 
@@ -12,6 +13,7 @@
 			
 			$network_objects = array();
 			$network_groups = array();
+			$users = array();
 			$access_lists = array();
 			$nat_rules = array();
 		
@@ -33,6 +35,12 @@
 						}
 						break;
 						
+					case UserParser::SCOPE:
+						if ($data = UserParser::parse()) {
+							$users[] = $data;
+						}
+						break;
+						
 					case AccessListParser::SCOPE:
 						if ($data = AccessListParser::parse()) {
 							$access_lists[] = $data;
@@ -51,6 +59,7 @@
 			
 			return array('objects' => $network_objects,
 						'groups' => $network_groups,
+						'users' => $users,
 						'acl' => $access_lists,
 						'nat' => $nat_rules
 						);
