@@ -2,6 +2,7 @@
 	
 	require_once("naiveparser.class.php");
 	require_once("networkobject.class.php");
+	require_once("networkgroup.class.php");
 	require_once("accesslist.class.php");
 	require_once("utils.class.php");
 
