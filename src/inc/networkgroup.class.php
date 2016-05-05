@@ -34,7 +34,7 @@
 			$result = "";
 			if ($type === "group-object") {
 				foreach ($groups as $group) {
-					if ($group->name == $name) {
+					if ($group->name === $name) {
 						$result .= "<li>" . $type . " " . $group->name;
 						if (!empty($group->children)) {
 							$result .= "<ul>";
@@ -48,7 +48,7 @@
 				}
 			} else if ($type === "network-object object") {
 				foreach ($objects as $obj) {
-					if ($obj->name == $name) {
+					if ($obj->name === $name) {
 						$result .= "<li>" . $type . " " . $obj->name;
 						if (!empty($obj->children)) {
 							$result .= "<ul>";

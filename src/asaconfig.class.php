@@ -1,6 +1,6 @@
 <?php
 	
-	require_once("parsers/naiveparser.class.php");
+	require_once("parsers/tokenparser.class.php");
 	require_once("inc/networkobject.class.php");
 	require_once("inc/networkgroup.class.php");
 	require_once("inc/user.class.php");
@@ -22,7 +22,7 @@
 		
 			$this->filters = $filters;
 			
-			$data = NaiveParser::parse($uploaded_file);
+			$data = TokenParser::parse($uploaded_file);
 			$this->network_objects = $data['objects'];
 			$this->network_groups = $data['groups'];
 			$this->users = $data['users'];

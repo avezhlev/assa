@@ -7,7 +7,7 @@
 	require_once("accesslistparser.class.php");
 	require_once("natparser.class.php");
 
-	class NaiveParser {
+	class TokenParser {
 		
 		static function parse($uploaded_file) {
 			

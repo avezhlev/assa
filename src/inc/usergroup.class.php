@@ -21,7 +21,7 @@
 				$result .= "<ul>";
 				foreach ($this->children as $child) {
 					foreach ($users as $user) {
-						if ($user->name == $child->name) {
+						if ($user->name === $child->name) {
 							$result .= "<li>" . User::TYPE . " " . $child->type . "\\" . $child->name;
 							if (!empty($user->children)) {
 								$result .= "<ul>";
