@@ -22,11 +22,11 @@
 		}
 		
 		
-		function out($highlight_object = "") {
+		function show($highlight_object = "") {
 			
 			$highlight_all = empty($highlight_object);
 			
-			$result = self::TYPE . " <b>" . $this->name . "</b> ";
+			$result = self::TYPE . " " . $this->name . " ";
 			
 			if (count($this->source_objects)) {
 				$result .= self::SOURCE_MARK . " " . $this->source_type . " ";

@@ -264,7 +264,7 @@
 			
 			foreach ($this->nat_rules as $rule) {				
 				echo "<div class='row'><div class='cell'>";
-				echo $rule->out();
+				echo $rule->show();
 				echo "</div></div>";
 			}
 			echo "</div></div>";
@@ -290,13 +290,22 @@
 		function mentionedInNATRule($name) {
 			
 			$results = array();
-			/*
+			
 			foreach ($this->nat_rules as $rule) {
-				if (strpos($rule . " ", " " . $name . " ") !== false) {
-					$results[] = Utils::addBoldTags($rule, " " . $name);
+				foreach ($rule->source_objects as $obj) {
+					if ($obj === $name) {
+						$results[] = $rule->show($name);
+						break 2;
+					}
+				}
+				foreach ($rule->destination_objects as $obj) {
+					if ($obj === $name) {
+						$results[] = $rule->show($name);
+						break 2;
+					}
 				}
 			}
-			*/
+			
 			return empty($results) ? false : $results;
 			
 		}
