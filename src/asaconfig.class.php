@@ -263,7 +263,9 @@
 			echo "<div class='row header red'><div class='cell'>Rule</div></div>";
 			
 			foreach ($this->nat_rules as $rule) {				
-				echo "<div class='row'><div class='cell'>$rule</div></div>";
+				echo "<div class='row'><div class='cell'>";
+				echo $rule->out();
+				echo "</div></div>";
 			}
 			echo "</div></div>";
 		}
@@ -288,13 +290,13 @@
 		function mentionedInNATRule($name) {
 			
 			$results = array();
-			
+			/*
 			foreach ($this->nat_rules as $rule) {
 				if (strpos($rule . " ", " " . $name . " ") !== false) {
 					$results[] = Utils::addBoldTags($rule, " " . $name);
 				}
 			}
-			
+			*/
 			return empty($results) ? false : $results;
 			
 		}

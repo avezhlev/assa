@@ -7,7 +7,6 @@
 	class UserParser {
 		
 		const SCOPE = "username";
-		const SUBSCOPE = "attributes";
 		const ATTRIBUTE_TYPES = array("vpn-group-policy", "vpn-tunnel-protocol", "service-type");
 		
 		static function parse() {
@@ -16,7 +15,7 @@
 				
 			$user = new User($tokenizer->nextToken());
 			
-			while (($token = $tokenizer->nextToken()) !== self::SUBSCOPE) {}
+			while (($token = $tokenizer->nextToken()) !== User::SUBSCOPE) {}
 			$tokenizer->nextToken(); //move to EOL
 			
 			while (self::isAttributeType($token = $tokenizer->nextToken())) {
