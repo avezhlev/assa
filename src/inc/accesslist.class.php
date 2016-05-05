@@ -10,19 +10,21 @@
 			parent::__construct($name, $type);
 		}
 		
-		function showAsUnorderedList() {
+		function asUnorderedList() {
 			
-			echo "<ul class='treeCSS'>";
-			echo "<li>" . $this->name . "<ul>";
-			echo "<li>" . $this->type;
+			$result = "<ul class='treeCSS'>";
+			$result .= "<li>" . $this->name . "<ul>";
+			$result .= "<li>" . $this->type;
 			if (!empty($this->children)) {
-				echo "<ul>";
+				$result .= "<ul>";
 				foreach ($this->children as $child) {
-					echo "<li>" . $child->type . " " . $child->name . "</li>";
+					$result .= "<li>" . $child->type . " " . $child->name . "</li>";
 				}
-				echo "</ul>";
+				$result .= "</ul>";
 			}
-			echo "</li></ul></li></ul>";
+			$result .= "</li></ul></li></ul>";
+			
+			return $result;
 		}
 		
 	}

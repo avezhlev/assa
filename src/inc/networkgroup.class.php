@@ -12,54 +12,59 @@
 		}
 		
 		
-		function showAsUnorderedList($objects, $groups) {
+		function asUnorderedList($objects, $groups) {
 			
-			echo "<ul class='treeCSS'>";
-			echo "<li>" . $this->type . " <b>" . $this->name . "</b>";
+			$result = "<ul class='treeCSS'>";
+			$result .= "<li>" . $this->type . " <b>" . $this->name . "</b>";
 			if (!empty($this->children)) {
-				echo "<ul>";
+				$result .= "<ul>";
 				foreach ($this->children as $child) {
-					$this->showGroupChild($child->type, $child->name, $objects, $groups);
+					$result .= $this->asGroupChild($child->type, $child->name, $objects, $groups);
 				}
-				echo "</ul>";
+				$result .= "</ul>";
 			}
-			echo "</li></ul>";
+			$result .= "</li></ul>";
+			
+			return $result;
 		}
 		
 		
-		function showGroupChild($type, $name, $objects, $groups) {
+		function asGroupChild($type, $name, $objects, $groups) {
 			
+			$result = "";
 			if ($type === "group-object") {
 				foreach ($groups as $group) {
 					if ($group->name == $name) {
-						echo "<li>" . $type . " " . $group->name;
+						$result .= "<li>" . $type . " " . $group->name;
 						if (!empty($group->children)) {
-							echo "<ul>";
+							$result .= "<ul>";
 							foreach ($group->children as $child) {
-								$this->showGroupChild($child->type, $child->name, $objects, $groups);
+								$result .= $this->asGroupChild($child->type, $child->name, $objects, $groups);
 							}
-							echo "</ul>";
+							$result .= "</ul>";
 						}
-						echo "</li>";
+						$result .= "</li>";
 					}
 				}
 			} else if ($type === "network-object object") {
 				foreach ($objects as $obj) {
 					if ($obj->name == $name) {
-						echo "<li>" . $type . " " . $obj->name;
+						$result .= "<li>" . $type . " " . $obj->name;
 						if (!empty($obj->children)) {
-							echo "<ul>";
+							$result .= "<ul>";
 							foreach ($obj->children as $child) {
-								echo "<li>" . $child->type . " " . $child->name . "</li>";
+								$result .= "<li>" . $child->type . " " . $child->name . "</li>";
 							}
-							echo "</ul>";
+							$result .= "</ul>";
 						}
-						echo "</li>";
+						$result .= "</li>";
 					}
 				}
 			} else {
-				echo "<li>" . $type . " " . $name . "</li>";
+				$result .= "<li>" . $type . " " . $name . "</li>";
 			}
+			
+			return $result;
 		}
 		
 	}

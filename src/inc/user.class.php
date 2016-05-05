@@ -12,18 +12,20 @@
 		}
 		
 		
-		function showAsUnorderedList() {
+		function asUnorderedList() {
 			
-			echo "<ul class='treeCSS'>";
-			echo "<li>" . $this->type . " <b>" . $this->name . "</b>";
+			$result = "<ul class='treeCSS'>";
+			$result .= "<li>" . $this->type . " <b>" . $this->name . "</b>";
 			if (!empty($this->children)) {
-				echo "<ul><li>" . self::SUBSCOPE . "<ul>";
+				$result .= "<ul><li>" . self::SUBSCOPE . "<ul>";
 				foreach ($this->children as $child) {
-					echo "<li>" . $child->type . " " . $child->name . "</li>";
+					$result .= "<li>" . $child->type . " " . $child->name . "</li>";
 				}
-				echo "</ul></li></ul>";
+				$result .= "</ul></li></ul>";
 			}
-			echo "</li></ul>";
+			$result .= "</li></ul>";
+			
+			return $result;
 		}
 		
 	}

@@ -24,7 +24,7 @@
 		}
 		
 		
-		function show($highlight_object = "") {
+		function asString($highlight_object = "") {
 			
 			$highlight_all = empty($highlight_object);
 			

@@ -13,30 +13,32 @@
 		}
 		
 		
-		function showAsUnorderedList($users) {
+		function asUnorderedList($users) {
 			
-			echo "<ul class='treeCSS'>";
-			echo "<li>" . $this->type . " <b>" . $this->name . "</b>";
+			$result = "<ul class='treeCSS'>";
+			$result .= "<li>" . $this->type . " <b>" . $this->name . "</b>";
 			if (!empty($this->children)) {
-				echo "<ul>";
+				$result .= "<ul>";
 				foreach ($this->children as $child) {
 					foreach ($users as $user) {
 						if ($user->name == $child->name) {
-							echo "<li>" . User::TYPE . " " . $child->type . "\\" . $child->name;
+							$result .= "<li>" . User::TYPE . " " . $child->type . "\\" . $child->name;
 							if (!empty($user->children)) {
-								echo "<ul>";
+								$result .= "<ul>";
 								foreach ($user->children as $child) {
-									echo "<li>" . $child->type . " " . $child->name . "</li>";
+									$result .= "<li>" . $child->type . " " . $child->name . "</li>";
 								}
-								echo "</ul>";
+								$result .= "</ul>";
 							}
-							echo "</li>";
+							$result .= "</li>";
 						}
 					}
 				}
-				echo "</ul>";
+				$result .= "</ul>";
 			}
-			echo "</li></ul>";
+			$result .= "</li></ul>";
+			
+			return $result;
 		}
 		
 	}

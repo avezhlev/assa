@@ -98,14 +98,14 @@
 				if ($this->filters['empty'] || $this->filters['nat'] && $rules || $this->filters['acl'] && $acls) {
 					
 					echo "<div class='row'><div class='cell nowrap'>";
-					$obj->showAsUnorderedList();
+					echo $obj->asUnorderedList();
 					echo "</div>";
 					
 					if ($this->filters['nat']) {
 						echo "<div class='cell'>";
 						if ($rules) {
 							foreach ($rules as $rule) {
-								echo $rule . "<br /><br />";
+								echo $rule->asString($obj->name) . "<br /><br />";
 							}
 						}
 						echo "</div>";
@@ -115,7 +115,7 @@
 						echo "<div class='cell nowrap'>";
 						if ($acls) {
 							foreach ($acls as $acl) {
-								$acl->showAsUnorderedList();
+								echo $acl->asUnorderedList();
 								echo "<br />";
 							}
 						}
@@ -149,14 +149,14 @@
 				if ($this->filters['empty'] || $this->filters['nat'] && $rules || $this->filters['acl'] && $acls) {
 					
 					echo "<div class='row'><div class='cell nowrap'>";
-					$group->showAsUnorderedList($this->network_objects, $this->network_groups);
+					echo $group->asUnorderedList($this->network_objects, $this->network_groups);
 					echo "</div>";
 					
 					if ($this->filters['nat']) {
 						echo "<div class='cell'>";
 						if ($rules) {
 							foreach ($rules as $rule) {
-								echo $rule . "<br /><br />";
+								echo $rule->asString($group->name) . "<br /><br />";
 							}
 						}
 						echo "</div>";
@@ -166,7 +166,7 @@
 						echo "<div class='cell nowrap'>";
 						if ($acls) {
 							foreach ($acls as $acl) {
-								$acl->showAsUnorderedList();
+								echo $acl->asUnorderedList();
 								echo "<br />";
 							}
 						}
@@ -197,14 +197,14 @@
 				if ($this->filters['empty'] || $this->filters['acl'] && $acls) {
 					
 					echo "<div class='row'><div class='cell nowrap'>";
-					$user->showAsUnorderedList();
+					echo $user->asUnorderedList();
 					echo "</div>";
 					
 					if ($this->filters['acl']) {
 						echo "<div class='cell nowrap'>";
 						if ($acls) {
 							foreach ($acls as $acl) {
-								$acl->showAsUnorderedList();
+								echo $acl->asUnorderedList();
 								echo "<br />";
 							}
 						}
@@ -235,14 +235,14 @@
 				if ($this->filters['empty'] || $this->filters['acl'] && $acls) {
 					
 					echo "<div class='row'><div class='cell nowrap'>";
-					$group->showAsUnorderedList($this->users);
+					echo $group->asUnorderedList($this->users);
 					echo "</div>";
 					
 					if ($this->filters['acl']) {
 						echo "<div class='cell nowrap'>";
 						if ($acls) {
 							foreach ($acls as $acl) {
-								$acl->showAsUnorderedList();
+								echo $acl->asUnorderedList();
 								echo "<br />";
 							}
 						}
@@ -264,7 +264,7 @@
 			
 			foreach ($this->nat_rules as $rule) {				
 				echo "<div class='row'><div class='cell'>";
-				echo $rule->show();
+				echo $rule->asString();
 				echo "</div></div>";
 			}
 			echo "</div></div>";
@@ -280,7 +280,7 @@
 			
 			foreach ($this->access_lists as $acl) {				
 				echo "<div class='row'><div class='cell'>";
-				$acl->showAsUnorderedList();
+				echo $acl->asUnorderedList();
 				echo "</div></div>";
 			}
 			echo "</div></div>";
@@ -294,13 +294,13 @@
 			foreach ($this->nat_rules as $rule) {
 				foreach ($rule->source_objects as $obj) {
 					if ($obj === $name) {
-						$results[] = $rule->show($name);
+						$results[] = $rule;
 						break 2;
 					}
 				}
 				foreach ($rule->destination_objects as $obj) {
 					if ($obj === $name) {
-						$results[] = $rule->show($name);
+						$results[] = $rule;
 						break 2;
 					}
 				}
