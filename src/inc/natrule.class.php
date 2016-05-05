@@ -7,12 +7,14 @@
 		const TYPE = "nat";
 		const SOURCE_MARK = "source";
 		const DESTINATION_MARK = "destination";
+		const SERVICE_MARK = "service";
 		const DESCRIPTION_MARK = "description";
 		
 		public $source_type;
 		public $destination_type;
 		public $source_objects = array();
 		public $destination_objects = array();
+		public $service_objects = array();
 		public $options = array();
 		public $decription;
 		
@@ -42,6 +44,17 @@
 			if (count($this->destination_objects)) {
 				$result .= self::DESTINATION_MARK . " " . $this->destination_type . " ";
 				foreach ($this->destination_objects as $obj) {
+					if ($highlight_all || ($obj === $highlight_object)) {
+						$result .= "<b>" . $obj . "</b>" . " ";
+					} else {
+						$result .= $obj . " ";
+					}
+				}
+			}
+			
+			if (count($this->service_objects)) {
+				$result .= self::SERVICE_MARK . " ";
+				foreach ($this->service_objects as $obj) {
 					if ($highlight_all || ($obj === $highlight_object)) {
 						$result .= "<b>" . $obj . "</b>" . " ";
 					} else {
