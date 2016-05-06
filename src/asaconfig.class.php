@@ -1,10 +1,6 @@
 <?php
 	
 	require_once("parsers/tokenparser.class.php");
-	require_once("inc/networkobject.class.php");
-	require_once("inc/networkgroup.class.php");
-	require_once("inc/user.class.php");
-	require_once("inc/accesslist.class.php");
 	require_once("utils.class.php");
 
 	class ASAConfig {
@@ -16,6 +12,7 @@
 		private $user_groups = array();
 		private $access_lists = array();
 		private $nat_rules = array();
+		private $public_services = array();
 			
 
 		function __construct($uploaded_file, $filters) {
@@ -23,12 +20,14 @@
 			$this->filters = $filters;
 			
 			$data = TokenParser::parse($uploaded_file);
+			
 			$this->network_objects = $data['objects'];
 			$this->network_groups = $data['groups'];
 			$this->users = $data['users'];
 			$this->user_groups = $data['user-groups'];
 			$this->access_lists = $data['acl'];
 			$this->nat_rules = $data['nat'];
+			$this->public_services = $data['ps'];
 		}
 		
 		
@@ -43,6 +42,7 @@
 			$this->showUsers();
 			$this->showUserGroups();
 			$this->showNATRules();
+			$this->showPublicServices();
 			$this->showAccessLists();
 			
 			$this->showFooter();
@@ -50,6 +50,7 @@
 		
 		
 		function showHeader() {
+			
 			echo "<head></head>";
 			echo "<body><link href='css/styles.css' rel='stylesheet'>";
 			echo "<div class='wrapper'>";
@@ -57,6 +58,7 @@
 		
 		
 		function showFooter() {
+			
 			echo "</div>";
 			echo "<script src='js/tree.js'></script>";
 			echo "<script src='js/tabs.js'></script>";
@@ -65,12 +67,14 @@
 		
 		
 		function showTabs() {
+			
 			echo "<ul class='tab'>
 				<li><a href='javascript:void(0)' class='tablinks active' onclick='showTab(event, \"objects\")'>Network objects</a></li>
 				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"groups\")'>Network groups</a></li>
 				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"users\")'>Users</a></li>
 				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"usergroups\")'>User groups</a></li>
 				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"natrules\")'>NAT rules</a></li>
+				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"publicservices\")'>Public services</a></li>
 				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"accesslists\")'>Access control lists</a></li>
 				</ul><br />";
 		}
@@ -83,7 +87,7 @@
 			
 			echo "<div class='row header blue'><div class='cell'>Object</div>";
 			if ($this->filters['nat']) {
-				echo "<div class='cell'>NAT rule</div>";
+				echo "<div class='cell'>NAT or PS rule</div>";
 			}
 			if ($this->filters['acl']) {
 				echo "<div class='cell'>ACL</div>";
@@ -126,6 +130,7 @@
 			}
 			echo "</div></div>";
 		}
+		
 		
 		function showNetworkGroups() {
 			
@@ -265,6 +270,22 @@
 			foreach ($this->nat_rules as $rule) {				
 				echo "<div class='row'><div class='cell'>";
 				echo $rule->asString();
+				echo "</div></div>";
+			}
+			echo "</div></div>";
+		}
+		
+		
+		function showPublicServices() {
+			
+			echo "<div id='publicservices' class='tabcontent'>";
+			echo "<div class='table'>";
+			
+			echo "<div class='row header red'><div class='cell'>Rule</div></div>";
+			
+			foreach ($this->public_services as $service) {				
+				echo "<div class='row'><div class='cell'>";
+				echo $service->asString();
 				echo "</div></div>";
 			}
 			echo "</div></div>";

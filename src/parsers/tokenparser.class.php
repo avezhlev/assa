@@ -6,6 +6,7 @@
 	require_once("userparser.class.php");
 	require_once("accesslistparser.class.php");
 	require_once("natparser.class.php");
+	require_once("publicserviceparser.class.php");
 
 	class TokenParser {
 		
@@ -17,6 +18,7 @@
 			$user_groups = array();
 			$access_lists = array();
 			$nat_rules = array();
+			$public_services = array();
 		
 			$tokenizer = FileTokenizer::getInstance($uploaded_file);
 			
@@ -26,7 +28,16 @@
 					
 					case ObjectParser::SCOPE:
 						if ($data = ObjectParser::parse()) {
-							$network_objects[] = $data;
+							switch (true) {
+								
+								case $data instanceof NetworkObject:
+									$network_objects[] = $data;
+									break;
+									
+								case $data instanceof PublicService:
+									$public_services[] = $data;
+									break;	
+							}
 						}
 						break;
 						
@@ -72,7 +83,8 @@
 						'users' => $users,
 						'user-groups' => $user_groups,
 						'acl' => $access_lists,
-						'nat' => $nat_rules
+						'nat' => $nat_rules,
+						'ps' => $public_services
 						);
 			
 		}
