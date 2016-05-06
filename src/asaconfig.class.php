@@ -33,17 +33,17 @@
 		
 		function showData() {
 			
-			$this->showHeader();
+			echo $this->showHeader().
 			
-			$this->showTabs();
+			$this->showTabs().
 			
-			$this->showNetworkObjects();
-			$this->showNetworkGroups();
-			$this->showUsers();
-			$this->showUserGroups();
-			$this->showNATRules();
-			$this->showPublicServices();
-			$this->showAccessLists();
+			$this->showNetworkObjects().
+			$this->showNetworkGroups().
+			$this->showUsers().
+			$this->showUserGroups().
+			$this->showNATRules().
+			$this->showPublicServices().
+			$this->showAccessLists().
 			
 			$this->showFooter();
 		}
@@ -51,48 +51,54 @@
 		
 		function showHeader() {
 			
-			echo "<head></head>";
-			echo "<body><link href='css/styles.css' rel='stylesheet'>";
-			echo "<div class='wrapper'>";
+			$result = "<head></head>";
+			$result .= "<body><link href='css/styles.css' rel='stylesheet'>";
+			$result .= "<div class='wrapper'>";
+			
+			return $result;
 		}
 		
 		
 		function showFooter() {
 			
-			echo "</div>";
-			echo "<script src='js/tree.js'></script>";
-			echo "<script src='js/tabs.js'></script>";
-			echo "</body>";
+			$result = "</div>";
+			$result .= "<script src='js/tree.js'></script>";
+			$result .= "<script src='js/tabs.js'></script>";
+			$result .= "</body>";
+			
+			return $result;
 		}
 		
 		
 		function showTabs() {
 			
-			echo "<ul class='tab'>
-				<li><a href='javascript:void(0)' class='tablinks active' onclick='showTab(event, \"objects\")'>Network objects</a></li>
-				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"groups\")'>Network groups</a></li>
-				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"users\")'>Users</a></li>
-				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"usergroups\")'>User groups</a></li>
-				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"natrules\")'>NAT rules</a></li>
-				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"publicservices\")'>Public services</a></li>
-				<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"accesslists\")'>Access control lists</a></li>
-				</ul><br />";
+			$result = "<ul class='tab'>";
+			$result .= "<li><a href='javascript:void(0)' class='tablinks active' onclick='showTab(event, \"objects\")'>Network objects</a></li>";
+			$result .= "<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"groups\")'>Network groups</a></li>";
+			$result .= "<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"users\")'>Users</a></li>";
+			$result .= "<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"usergroups\")'>User groups</a></li>";
+			$result .= "<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"natrules\")'>NAT rules</a></li>";
+			$result .= "<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"publicservices\")'>Public services</a></li>";
+			$result .= "<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"accesslists\")'>Access control lists</a></li>";
+			$result .= "</ul><br />";
+			
+			return $result;
 		}
 		
 		
 		function showNetworkObjects() {
 			
-			echo "<div id='objects' class='tabcontent' style='display: block;'>";
-			echo "<div class='table'>";
+			$result = "<div id='objects' class='tabcontent' style='display: block;'>";
+			$result .= "<div class='table'>";
 			
-			echo "<div class='row header blue'><div class='cell'>Object</div>";
+			$result .= "<div class='row header blue'><div class='cell'>Object</div>";
 			if ($this->filters['nat']) {
-				echo "<div class='cell'>NAT or PS rule</div>";
+				$result .= "<div class='cell'>NAT or PS rule</div>";
 			}
 			if ($this->filters['acl']) {
-				echo "<div class='cell'>ACL</div>";
+				$result .= "<div class='cell'>ACL</div>";
 			}
-			echo "</div>";
+			$result .= "</div>";
 			
 			foreach ($this->network_objects as $obj) {
 				
@@ -102,55 +108,57 @@
 				
 				if ($this->filters['empty'] || $this->filters['nat'] && $rules || $this->filters['nat'] && $service_rules || $this->filters['acl'] && $acls) {
 					
-					echo "<div class='row'><div class='cell nowrap'>";
-					echo $obj->asUnorderedList();
-					echo "</div>";
+					$result .= "<div class='row'><div class='cell nowrap'>";
+					$result .= $obj->asUnorderedList();
+					$result .= "</div>";
 					
 					if ($this->filters['nat']) {
-						echo "<div class='cell'>";
+						$result .= "<div class='cell'>";
 						if ($rules) {
 							foreach ($rules as $rule) {
-								echo $rule->asString($obj->name) . "<br /><br />";
+								$result .= $rule->asString($obj->name) . "<br /><br />";
 							}
 						}
 						if ($service_rules) {
 							foreach ($service_rules as $rule) {
-								echo $rule->asString($obj->name) . "<br /><br />";
+								$result .= $rule->asString($obj->name) . "<br /><br />";
 							}
 						}
-						echo "</div>";
+						$result .= "</div>";
 					}
 					
 					if ($this->filters['acl']) {
-						echo "<div class='cell nowrap'>";
+						$result .= "<div class='cell nowrap'>";
 						if ($acls) {
 							foreach ($acls as $acl) {
-								echo $acl->asUnorderedList();
-								echo "<br />";
+								$result .= $acl->asUnorderedList();
+								$result .= "<br />";
 							}
 						}
-						echo "</div>";
+						$result .= "</div>";
 					}
-					echo "</div>";
+					$result .= "</div>";
 				}
 			}
-			echo "</div></div>";
+			$result .= "</div></div>";
+			
+			return $result;
 		}
 		
 		
 		function showNetworkGroups() {
 			
-			echo "<div id='groups' class='tabcontent'>";
-			echo "<div class='table'>";
+			$result = "<div id='groups' class='tabcontent'>";
+			$result .= "<div class='table'>";
 			
-			echo "<div class='row header blue'><div class='cell'>Group</div>";
+			$result .= "<div class='row header blue'><div class='cell'>Group</div>";
 			if ($this->filters['nat']) {
-				echo "<div class='cell'>NAT rule</div>";
+				$result .= "<div class='cell'>NAT rule</div>";
 			}
 			if ($this->filters['acl']) {
-				echo "<div class='cell'>ACL</div>";
+				$result .= "<div class='cell'>ACL</div>";
 			}
-			echo "</div>";
+			$result .= "</div>";
 			
 			foreach ($this->network_groups as $group) {
 				
@@ -159,47 +167,49 @@
 				
 				if ($this->filters['empty'] || $this->filters['nat'] && $rules || $this->filters['acl'] && $acls) {
 					
-					echo "<div class='row'><div class='cell nowrap'>";
-					echo $group->asUnorderedList($this->network_objects, $this->network_groups);
-					echo "</div>";
+					$result .= "<div class='row'><div class='cell nowrap'>";
+					$result .= $group->asUnorderedList($this->network_objects, $this->network_groups);
+					$result .= "</div>";
 					
 					if ($this->filters['nat']) {
-						echo "<div class='cell'>";
+						$result .= "<div class='cell'>";
 						if ($rules) {
 							foreach ($rules as $rule) {
-								echo $rule->asString($group->name) . "<br /><br />";
+								$result .= $rule->asString($group->name) . "<br /><br />";
 							}
 						}
-						echo "</div>";
+						$result .= "</div>";
 					}
 					
 					if ($this->filters['acl']) {
-						echo "<div class='cell nowrap'>";
+						$result .= "<div class='cell nowrap'>";
 						if ($acls) {
 							foreach ($acls as $acl) {
-								echo $acl->asUnorderedList();
-								echo "<br />";
+								$result .= $acl->asUnorderedList();
+								$result .= "<br />";
 							}
 						}
-						echo "</div>";
+						$result .= "</div>";
 					}
-					echo "</div>";
+					$result .= "</div>";
 				}
 			}
-			echo "</div></div>";
+			$result .= "</div></div>";
+			
+			return $result;
 		}
 		
 		
 		function showUsers() {
 			
-			echo "<div id='users' class='tabcontent'>";
-			echo "<div class='table'>";
+			$result = "<div id='users' class='tabcontent'>";
+			$result .= "<div class='table'>";
 			
-			echo "<div class='row header green'><div class='cell'>User</div>";
+			$result .= "<div class='row header green'><div class='cell'>User</div>";
 			if ($this->filters['acl']) {
-				echo "<div class='cell'>ACL</div>";
+				$result .= "<div class='cell'>ACL</div>";
 			}
-			echo "</div>";
+			$result .= "</div>";
 			
 			foreach ($this->users as $user) {
 				
@@ -207,37 +217,39 @@
 				
 				if ($this->filters['empty'] || $this->filters['acl'] && $acls) {
 					
-					echo "<div class='row'><div class='cell nowrap'>";
-					echo $user->asUnorderedList();
-					echo "</div>";
+					$result .= "<div class='row'><div class='cell nowrap'>";
+					$result .= $user->asUnorderedList();
+					$result .= "</div>";
 					
 					if ($this->filters['acl']) {
-						echo "<div class='cell nowrap'>";
+						$result .= "<div class='cell nowrap'>";
 						if ($acls) {
 							foreach ($acls as $acl) {
-								echo $acl->asUnorderedList();
-								echo "<br />";
+								$result .= $acl->asUnorderedList();
+								$result .= "<br />";
 							}
 						}
-						echo "</div>";
+						$result .= "</div>";
 					}
-					echo "</div>";
+					$result .= "</div>";
 				}
 			}
-			echo "</div></div>";
+			$result .= "</div></div>";
+			
+			return $result;
 		}
 		
 		
 		function showUserGroups() {
 			
-			echo "<div id='usergroups' class='tabcontent'>";
-			echo "<div class='table'>";
+			$result = "<div id='usergroups' class='tabcontent'>";
+			$result .= "<div class='table'>";
 			
-			echo "<div class='row header green'><div class='cell'>Group</div>";
+			$result .= "<div class='row header green'><div class='cell'>Group</div>";
 			if ($this->filters['acl']) {
-				echo "<div class='cell'>ACL</div>";
+				$result .= "<div class='cell'>ACL</div>";
 			}
-			echo "</div>";
+			$result .= "</div>";
 			
 			foreach ($this->user_groups as $group) {
 				
@@ -245,72 +257,80 @@
 				
 				if ($this->filters['empty'] || $this->filters['acl'] && $acls) {
 					
-					echo "<div class='row'><div class='cell nowrap'>";
-					echo $group->asUnorderedList($this->users);
-					echo "</div>";
+					$result .= "<div class='row'><div class='cell nowrap'>";
+					$result .= $group->asUnorderedList($this->users);
+					$result .= "</div>";
 					
 					if ($this->filters['acl']) {
-						echo "<div class='cell nowrap'>";
+						$result .= "<div class='cell nowrap'>";
 						if ($acls) {
 							foreach ($acls as $acl) {
-								echo $acl->asUnorderedList();
-								echo "<br />";
+								$result .= $acl->asUnorderedList();
+								$result .= "<br />";
 							}
 						}
-						echo "</div>";
+						$result .= "</div>";
 					}
-					echo "</div>";
+					$result .= "</div>";
 				}
 			}
-			echo "</div></div>";
+			$result .= "</div></div>";
+			
+			return $result;
 		}
 		
 		
 		function showNATRules() {
 			
-			echo "<div id='natrules' class='tabcontent'>";
-			echo "<div class='table'>";
+			$result = "<div id='natrules' class='tabcontent'>";
+			$result .= "<div class='table'>";
 			
-			echo "<div class='row header red'><div class='cell'>Rule</div></div>";
+			$result .= "<div class='row header red'><div class='cell'>Rule</div></div>";
 			
 			foreach ($this->nat_rules as $rule) {				
-				echo "<div class='row'><div class='cell'>";
-				echo $rule->asString();
-				echo "</div></div>";
+				$result .= "<div class='row'><div class='cell'>";
+				$result .= $rule->asString();
+				$result .= "</div></div>";
 			}
-			echo "</div></div>";
+			$result .= "</div></div>";
+			
+			return $result;
 		}
 		
 		
 		function showPublicServices() {
 			
-			echo "<div id='publicservices' class='tabcontent'>";
-			echo "<div class='table'>";
+			$result = "<div id='publicservices' class='tabcontent'>";
+			$result .= "<div class='table'>";
 			
-			echo "<div class='row header red'><div class='cell'>Rule</div></div>";
+			$result .= "<div class='row header red'><div class='cell'>Rule</div></div>";
 			
 			foreach ($this->public_services as $service) {				
-				echo "<div class='row'><div class='cell'>";
-				echo $service->asString();
-				echo "</div></div>";
+				$result .= "<div class='row'><div class='cell'>";
+				$result .= $service->asString();
+				$result .= "</div></div>";
 			}
-			echo "</div></div>";
+			$result .= "</div></div>";
+			
+			return $result;
 		}
 		
 		
 		function showAccessLists() {
 			
-			echo "<div id='accesslists' class='tabcontent'>";
-			echo "<div class='table'>";
+			$result = "<div id='accesslists' class='tabcontent'>";
+			$result .= "<div class='table'>";
 			
-			echo "<div class='row header red'><div class='cell'>ACL</div></div>";
+			$result .= "<div class='row header red'><div class='cell'>ACL</div></div>";
 			
 			foreach ($this->access_lists as $acl) {				
-				echo "<div class='row'><div class='cell'>";
-				echo $acl->asUnorderedList();
-				echo "</div></div>";
+				$result .= "<div class='row'><div class='cell'>";
+				$result .= $acl->asUnorderedList();
+				$result .= "</div></div>";
 			}
-			echo "</div></div>";
+			$result .= "</div></div>";
+			
+			return $result;
 		}
 
 		
