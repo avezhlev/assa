@@ -17,11 +17,11 @@
 			$result = "<ul class='treeCSS'>";
 			$result .= "<li>" . $this->type . " <b>" . $this->name . "</b>";
 			if (!empty($this->children)) {
-				$result .= "<ul><li>" . self::SUBSCOPE . "<ul>";
+				$result .= "<ul>";
 				foreach ($this->children as $child) {
 					$result .= "<li>" . $child->type . " " . $child->name . "</li>";
 				}
-				$result .= "</ul></li></ul>";
+				$result .= "</ul>";
 			}
 			$result .= "</li></ul>";
 			
