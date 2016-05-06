@@ -8,9 +8,6 @@
 	class ObjectGroupParser {
 		
 		const SCOPE = "object-group";
-
-		const USER_SUBSCOPE = "user";
-		const USER_CHILD_TYPE = "user";
 		
 		static function parse() {
 			
