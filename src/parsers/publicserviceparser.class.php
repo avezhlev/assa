@@ -5,6 +5,8 @@
 
 	class PublicServiceParser {
 		
+		const SUBSCOPE = "nat";
+		
 		static function parse($outer_object) {
 				
 			$tokenizer = FileTokenizer::getInstance();

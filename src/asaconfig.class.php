@@ -97,9 +97,10 @@
 			foreach ($this->network_objects as $obj) {
 				
 				$rules = $this->mentionedInNATRule($obj->name);
+				$service_rules = $this->mentionedInPublicService($obj->name);
 				$acls = $this->mentionedInACL($obj->name);
 				
-				if ($this->filters['empty'] || $this->filters['nat'] && $rules || $this->filters['acl'] && $acls) {
+				if ($this->filters['empty'] || $this->filters['nat'] && $rules || $this->filters['nat'] && $service_rules || $this->filters['acl'] && $acls) {
 					
 					echo "<div class='row'><div class='cell nowrap'>";
 					echo $obj->asUnorderedList();
@@ -109,6 +110,11 @@
 						echo "<div class='cell'>";
 						if ($rules) {
 							foreach ($rules as $rule) {
+								echo $rule->asString($obj->name) . "<br /><br />";
+							}
+						}
+						if ($service_rules) {
+							foreach ($service_rules as $rule) {
 								echo $rule->asString($obj->name) . "<br /><br />";
 							}
 						}
@@ -324,6 +330,22 @@
 						$results[] = $rule;
 						break 2;
 					}
+				}
+			}
+			
+			return empty($results) ? false : $results;
+			
+		}
+		
+		
+		function mentionedInPublicService($name) {
+			
+			$results = array();
+			
+			foreach ($this->public_services as $rule) {
+				if ($rule->inner_object === $name || $rule->outer_object === $name) {
+					$results[] = $rule;
+					break;
 				}
 			}
 			

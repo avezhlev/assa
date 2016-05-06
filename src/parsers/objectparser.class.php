@@ -4,7 +4,6 @@
 	require_once("publicserviceparser.class.php");
 	require_once(__DIR__ . "/../inc/commonobject.class.php");
 	require_once(__DIR__ . "/../inc/networkobject.class.php");
-	require_once(__DIR__ . "/../inc/publicservice.class.php");
 
 	class ObjectParser {
 		
@@ -21,7 +20,7 @@
 				case self::NETWORK_SUBSCOPE:
 					$network_object = new NetworkObject($tokenizer->nextToken());
 					$tokenizer->nextToken();//EOL
-					if (PublicService::TYPE === $tokenizer->nextToken()) {
+					if (PublicServiceParser::SUBSCOPE === $tokenizer->nextToken()) {
 						return PublicServiceParser::parse($network_object->name);
 					}
 					$tokenizer->previousToken();
