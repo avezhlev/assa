@@ -106,39 +106,43 @@
 				$service_rules = $this->mentionedInPublicService($obj->name);
 				$acls = $this->mentionedInACL($obj->name);
 				
-				if ($this->filters['empty'] || $this->filters['nat'] && $rules || $this->filters['nat'] && $service_rules || $this->filters['acl'] && $acls) {
+				if ($this->filters['nat'] && $rules || $this->filters['nat'] && $service_rules || $this->filters['acl'] && $acls) {
+					$result .= "<div class='row'>";
+				} else {
+					$result .= "<div class='row blue'>";
+				}
 					
-					$result .= "<div class='row'><div class='cell nowrap'>";
-					$result .= $obj->asUnorderedList();
-					$result .= "</div>";
+				$result .= "<div class='cell nowrap'>";
+				$result .= $obj->asUnorderedList();
+				$result .= "</div>";
 					
-					if ($this->filters['nat']) {
-						$result .= "<div class='cell'>";
-						if ($rules) {
-							foreach ($rules as $rule) {
-								$result .= $rule->asString($obj->name) . "<br /><br />";
-							}
+				if ($this->filters['nat']) {
+					$result .= "<div class='cell'>";
+					if ($rules) {
+						foreach ($rules as $rule) {
+							$result .= $rule->asString($obj->name) . "<br /><br />";
 						}
-						if ($service_rules) {
-							foreach ($service_rules as $rule) {
-								$result .= $rule->asString($obj->name) . "<br /><br />";
-							}
-						}
-						$result .= "</div>";
 					}
-					
-					if ($this->filters['acl']) {
-						$result .= "<div class='cell nowrap'>";
-						if ($acls) {
-							foreach ($acls as $acl) {
-								$result .= $acl->asUnorderedList();
-								$result .= "<br />";
-							}
+					if ($service_rules) {
+						foreach ($service_rules as $rule) {
+							$result .= $rule->asString($obj->name) . "<br /><br />";
 						}
-						$result .= "</div>";
 					}
 					$result .= "</div>";
 				}
+					
+				if ($this->filters['acl']) {
+					$result .= "<div class='cell nowrap'>";
+					if ($acls) {
+						foreach ($acls as $acl) {
+							$result .= $acl->asUnorderedList();
+							$result .= "<br />";
+						}
+					}
+					$result .= "</div>";
+				}
+				$result .= "</div>";
+				
 			}
 			$result .= "</div></div>";
 			
@@ -165,34 +169,38 @@
 				$rules = $this->mentionedInNATRule($group->name);
 				$acls = $this->mentionedInACL($group->name);
 				
-				if ($this->filters['empty'] || $this->filters['nat'] && $rules || $this->filters['acl'] && $acls) {
+				if ($this->filters['nat'] && $rules || $this->filters['acl'] && $acls) {
+					$result .= "<div class='row'>";
+				} else {
+					$result .= "<div class='row blue'>";
+				}
 					
-					$result .= "<div class='row'><div class='cell nowrap'>";
-					$result .= $group->asUnorderedList($this->network_objects, $this->network_groups);
-					$result .= "</div>";
+				$result .= "<div class='cell nowrap'>";
+				$result .= $group->asUnorderedList($this->network_objects, $this->network_groups);
+				$result .= "</div>";
 					
-					if ($this->filters['nat']) {
-						$result .= "<div class='cell'>";
-						if ($rules) {
-							foreach ($rules as $rule) {
-								$result .= $rule->asString($group->name) . "<br /><br />";
-							}
+				if ($this->filters['nat']) {
+					$result .= "<div class='cell'>";
+					if ($rules) {
+						foreach ($rules as $rule) {
+							$result .= $rule->asString($group->name) . "<br /><br />";
 						}
-						$result .= "</div>";
-					}
-					
-					if ($this->filters['acl']) {
-						$result .= "<div class='cell nowrap'>";
-						if ($acls) {
-							foreach ($acls as $acl) {
-								$result .= $acl->asUnorderedList();
-								$result .= "<br />";
-							}
-						}
-						$result .= "</div>";
 					}
 					$result .= "</div>";
 				}
+					
+				if ($this->filters['acl']) {
+					$result .= "<div class='cell nowrap'>";
+					if ($acls) {
+						foreach ($acls as $acl) {
+							$result .= $acl->asUnorderedList();
+							$result .= "<br />";
+						}
+					}
+					$result .= "</div>";
+				}
+				$result .= "</div>";
+				
 			}
 			$result .= "</div></div>";
 			

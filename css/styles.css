@@ -38,17 +38,35 @@ body {
 .row:nth-of-type(odd) {
   background: #e9e9e9;
 }
+.row.blue {
+  background: #dce9ff;
+}
+.row.blue:nth-of-type(odd) {
+  background: #cfdcff;
+}
+.row.green {
+  background: #dcffdc;
+}
+.row.green:nth-of-type(odd) {
+  background: #cfffcf;
+}
+.row.red {
+  background: #ffdcdc;
+}
+.row.red:nth-of-type(odd) {
+  background: #ffcfcf;
+}
 .row.header {
   font-weight: 900;
   color: #ffffff;
 }
-.row.blue {
+.row.header.blue {
   background: #2980b9;
 }
-.row.green {
+.row.header.green {
   background: #27ae60;
 }
-.row.red {
+.row.header.red {
   background: #ea6153;
 }
 .row.small {
