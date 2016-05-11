@@ -5,7 +5,7 @@
 
 	class ASAConfig {
 		
-		private $filters = array();
+		private $options = array();
 		private $network_objects = array();
 		private $network_groups = array();
 		private $users = array();
@@ -15,9 +15,9 @@
 		private $public_services = array();
 			
 
-		function __construct($uploaded_file, $filters) {
+		function __construct($uploaded_file, $options) {
 		
-			$this->filters = $filters;
+			$this->options = $options;
 			
 			$data = TokenParser::parse($uploaded_file);
 			
@@ -92,12 +92,8 @@
 			$result .= "<div class='table'>";
 			
 			$result .= "<div class='row header blue'><div class='cell'>Object</div>";
-			if ($this->filters['nat']) {
-				$result .= "<div class='cell'>NAT or PS rule</div>";
-			}
-			if ($this->filters['acl']) {
-				$result .= "<div class='cell'>ACL</div>";
-			}
+			$result .= "<div class='cell'>NAT or PS rule</div>";
+			$result .= "<div class='cell'>ACL</div>";
 			$result .= "</div>";
 			
 			foreach ($this->network_objects as $obj) {
@@ -106,41 +102,38 @@
 				$service_rules = $this->mentionedInPublicService($obj->name);
 				$acls = $this->mentionedInACL($obj->name);
 				
-				if ($this->filters['nat'] && $rules || $this->filters['nat'] && $service_rules || $this->filters['acl'] && $acls) {
-					$result .= "<div class='row'>";
-				} else {
+				if($this->options['highlight'] && !($rules || $service_rules || $acls)) {
 					$result .= "<div class='row blue'>";
+				} else {
+					$result .= "<div class='row'>";
 				}
 					
 				$result .= "<div class='cell nowrap'>";
 				$result .= $obj->asUnorderedList();
 				$result .= "</div>";
 					
-				if ($this->filters['nat']) {
-					$result .= "<div class='cell'>";
-					if ($rules) {
-						foreach ($rules as $rule) {
-							$result .= $rule->asString($obj->name) . "<br /><br />";
-						}
+				$result .= "<div class='cell'>";
+				if ($rules) {
+					foreach ($rules as $rule) {
+						$result .= $rule->asString($obj->name) . "<br /><br />";
 					}
-					if ($service_rules) {
-						foreach ($service_rules as $rule) {
-							$result .= $rule->asString($obj->name) . "<br /><br />";
-						}
-					}
-					$result .= "</div>";
 				}
+				if ($service_rules) {
+					foreach ($service_rules as $rule) {
+						$result .= $rule->asString($obj->name) . "<br /><br />";
+					}
+				}
+				$result .= "</div>";
 					
-				if ($this->filters['acl']) {
-					$result .= "<div class='cell nowrap'>";
-					if ($acls) {
-						foreach ($acls as $acl) {
-							$result .= $acl->asUnorderedList();
-							$result .= "<br />";
-						}
+				$result .= "<div class='cell nowrap'>";
+				if ($acls) {
+					foreach ($acls as $acl) {
+						$result .= $acl->asUnorderedList();
+						$result .= "<br />";
 					}
-					$result .= "</div>";
 				}
+				$result .= "</div>";
+
 				$result .= "</div>";
 				
 			}
@@ -156,12 +149,9 @@
 			$result .= "<div class='table'>";
 			
 			$result .= "<div class='row header blue'><div class='cell'>Group</div>";
-			if ($this->filters['nat']) {
-				$result .= "<div class='cell'>NAT rule</div>";
-			}
-			if ($this->filters['acl']) {
-				$result .= "<div class='cell'>ACL</div>";
-			}
+			$result .= "<div class='cell'>NAT rule</div>";
+
+			$result .= "<div class='cell'>ACL</div>";
 			$result .= "</div>";
 			
 			foreach ($this->network_groups as $group) {
@@ -169,36 +159,33 @@
 				$rules = $this->mentionedInNATRule($group->name);
 				$acls = $this->mentionedInACL($group->name);
 				
-				if ($this->filters['nat'] && $rules || $this->filters['acl'] && $acls) {
-					$result .= "<div class='row'>";
-				} else {
+				if($this->options['highlight'] && !($rules || $acls)) {
 					$result .= "<div class='row blue'>";
+				} else {
+					$result .= "<div class='row'>";
 				}
 					
 				$result .= "<div class='cell nowrap'>";
 				$result .= $group->asUnorderedList($this->network_objects, $this->network_groups);
 				$result .= "</div>";
 					
-				if ($this->filters['nat']) {
-					$result .= "<div class='cell'>";
-					if ($rules) {
-						foreach ($rules as $rule) {
-							$result .= $rule->asString($group->name) . "<br /><br />";
-						}
+				$result .= "<div class='cell'>";
+				if ($rules) {
+					foreach ($rules as $rule) {
+						$result .= $rule->asString($group->name) . "<br /><br />";
 					}
-					$result .= "</div>";
 				}
+				$result .= "</div>";
 					
-				if ($this->filters['acl']) {
-					$result .= "<div class='cell nowrap'>";
-					if ($acls) {
-						foreach ($acls as $acl) {
-							$result .= $acl->asUnorderedList();
-							$result .= "<br />";
-						}
+				$result .= "<div class='cell nowrap'>";
+				if ($acls) {
+					foreach ($acls as $acl) {
+						$result .= $acl->asUnorderedList();
+						$result .= "<br />";
 					}
-					$result .= "</div>";
 				}
+				$result .= "</div>";
+				
 				$result .= "</div>";
 				
 			}
@@ -214,33 +201,33 @@
 			$result .= "<div class='table'>";
 			
 			$result .= "<div class='row header green'><div class='cell'>User</div>";
-			if ($this->filters['acl']) {
-				$result .= "<div class='cell'>ACL</div>";
-			}
+			$result .= "<div class='cell'>ACL</div>";
 			$result .= "</div>";
 			
 			foreach ($this->users as $user) {
 				
 				$acls = $this->mentionedInACL("LOCAL\\" . $user->name);
 				
-				if ($this->filters['empty'] || $this->filters['acl'] && $acls) {
-					
-					$result .= "<div class='row'><div class='cell nowrap'>";
-					$result .= $user->asUnorderedList();
-					$result .= "</div>";
-					
-					if ($this->filters['acl']) {
-						$result .= "<div class='cell nowrap'>";
-						if ($acls) {
-							foreach ($acls as $acl) {
-								$result .= $acl->asUnorderedList();
-								$result .= "<br />";
-							}
-						}
-						$result .= "</div>";
-					}
-					$result .= "</div>";
+				if ($this->options['highlight'] && !$acls) {
+					$result .= "<div class='row green'>";
+				} else {
+					$result .= "<div class='row'>";
 				}
+					
+				$result .= "<div class='cell nowrap'>";
+				$result .= $user->asUnorderedList();
+				$result .= "</div>";
+					
+				$result .= "<div class='cell nowrap'>";
+				if ($acls) {
+					foreach ($acls as $acl) {
+						$result .= $acl->asUnorderedList();
+						$result .= "<br />";
+					}
+				}
+				$result .= "</div>";
+
+				$result .= "</div>";
 			}
 			$result .= "</div></div>";
 			
@@ -254,33 +241,34 @@
 			$result .= "<div class='table'>";
 			
 			$result .= "<div class='row header green'><div class='cell'>Group</div>";
-			if ($this->filters['acl']) {
-				$result .= "<div class='cell'>ACL</div>";
-			}
+			$result .= "<div class='cell'>ACL</div>";
 			$result .= "</div>";
 			
 			foreach ($this->user_groups as $group) {
 				
 				$acls = $this->mentionedInACL($group->name);
 				
-				if ($this->filters['empty'] || $this->filters['acl'] && $acls) {
-					
-					$result .= "<div class='row'><div class='cell nowrap'>";
-					$result .= $group->asUnorderedList($this->users);
-					$result .= "</div>";
-					
-					if ($this->filters['acl']) {
-						$result .= "<div class='cell nowrap'>";
-						if ($acls) {
-							foreach ($acls as $acl) {
-								$result .= $acl->asUnorderedList();
-								$result .= "<br />";
-							}
-						}
-						$result .= "</div>";
-					}
-					$result .= "</div>";
+				if ($this->options['highlight'] && !$acls) {
+					$result .= "<div class='row green'>";
+				} else {
+					$result .= "<div class='row'>";
 				}
+					
+				$result .= "<div class='cell nowrap'>";
+				$result .= $group->asUnorderedList($this->users);
+				$result .= "</div>";
+				
+				$result .= "<div class='cell nowrap'>";
+				if ($acls) {
+					foreach ($acls as $acl) {
+						$result .= $acl->asUnorderedList();
+						$result .= "<br />";
+					}
+				}
+				$result .= "</div>";
+
+				$result .= "</div>";
+				
 			}
 			$result .= "</div></div>";
 			

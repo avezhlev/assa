@@ -11,12 +11,10 @@
 
 	if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploaded_file)) {
 		
-		$filters = array();
-		$filters['empty'] = isset($_POST['empty']);
-		$filters['nat'] = isset($_POST['nat']);
-		$filters['acl'] = isset($_POST['acl']);
+		$options = array();
+		$options['highlight'] = isset($_POST['highlight']);
 		
-		$config = new ASAConfig($uploaded_file, $filters);
+		$config = new ASAConfig($uploaded_file, $options);
 		$config->showData();
 
 	}

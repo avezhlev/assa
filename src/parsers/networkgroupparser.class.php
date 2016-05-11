@@ -19,7 +19,7 @@
 			$tokenizer->nextToken();//EOL
 			while (self::isNetworkGroupChild($token = $tokenizer->nextToken())) {
 				$child_type = $token;
-				if ($token == self::CHILD_TYPES[0]) {
+				if ($token === self::CHILD_TYPES[0]) {
 					if (($next_token = $tokenizer->nextToken()) === self::CHILD_SUBTYPE) {
 						$child_type .= " " . $next_token;
 					} else {
