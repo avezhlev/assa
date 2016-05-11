@@ -32,33 +32,48 @@
 			
 			if (count($this->source_objects)) {
 				$result .= self::SOURCE_MARK . " " . $this->source_type . " ";
+				$is_first = true;
 				foreach ($this->source_objects as $obj) {
 					if ($highlight_all || ($obj === $highlight_object)) {
 						$result .= "<b>" . $obj . "</b>" . " ";
 					} else {
 						$result .= $obj . " ";
 					}
+					if ($is_first) {
+						$result .= " --> ";
+						$is_first = false;
+					}
 				}
 			}
 			
 			if (count($this->destination_objects)) {
 				$result .= self::DESTINATION_MARK . " " . $this->destination_type . " ";
+				$is_first = true;
 				foreach ($this->destination_objects as $obj) {
 					if ($highlight_all || ($obj === $highlight_object)) {
 						$result .= "<b>" . $obj . "</b>" . " ";
 					} else {
 						$result .= $obj . " ";
 					}
+					if ($is_first) {
+						$result .= " --> ";
+						$is_first = false;
+					}
 				}
 			}
 			
 			if (count($this->service_objects)) {
 				$result .= self::SERVICE_MARK . " ";
+				$is_first = true;
 				foreach ($this->service_objects as $obj) {
 					if ($highlight_all || ($obj === $highlight_object)) {
 						$result .= "<b>" . $obj . "</b>" . " ";
 					} else {
 						$result .= $obj . " ";
+					}
+					if ($is_first) {
+						$result .= " --> ";
+						$is_first = false;
 					}
 				}
 			}
@@ -67,7 +82,7 @@
 				$result .= $option . " ";
 			}
 			
-			if ($this->description !== "") {
+			if (!empty($this->description)) {
 				$result .= "<i>" . self::DESCRIPTION_MARK . " " . $this->description . "</i>";
 			}
 			

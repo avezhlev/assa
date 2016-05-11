@@ -27,7 +27,7 @@
 				$result = self::TYPE;
 			}
 			
-			$result .= " " . $this->name . " <b>" . $this->subnet . ($this->ip_version === 6 ? "/" : " ") . $this->mask . " " . $this->next_hop . "</b> " . $this->metric;
+			$result .= " " . $this->name . " <b>" . $this->subnet . "/" . $this->mask . "</b> --> <b>" . $this->next_hop . "</b> <i>" . $this->metric . "</i>";
 			
 			return $result;
 		}
