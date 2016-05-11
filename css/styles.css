@@ -45,10 +45,10 @@ body {
   background: #cfdcff;
 }
 .row.green {
-  background: #dcffdc;
+  background: #cfeecf;
 }
 .row.green:nth-of-type(odd) {
-  background: #cfffcf;
+  background: #c2eec2;
 }
 .row.red {
   background: #ffdcdc;
