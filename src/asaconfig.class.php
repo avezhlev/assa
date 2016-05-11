@@ -5,6 +5,8 @@
 
 	class ASAConfig {
 		
+		const LOCAL_PREFIX = "LOCAL\\";
+		
 		private $options = array();
 		private $network_objects = array();
 		private $network_groups = array();
@@ -132,7 +134,7 @@
 				$result .= "<div class='cell nowrap'>";
 				if ($acls) {
 					foreach ($acls as $acl) {
-						$result .= $acl->asUnorderedList();
+						$result .= $acl->asUnorderedList($obj->name);
 						$result .= "<br />";
 					}
 				}
@@ -184,7 +186,7 @@
 				$result .= "<div class='cell nowrap'>";
 				if ($acls) {
 					foreach ($acls as $acl) {
-						$result .= $acl->asUnorderedList();
+						$result .= $acl->asUnorderedList($group->name);
 						$result .= "<br />";
 					}
 				}
@@ -210,7 +212,7 @@
 			
 			foreach ($this->users as $user) {
 				
-				$acls = $this->mentionedInACL("LOCAL\\" . $user->name);
+				$acls = $this->mentionedInACL(self::LOCAL_PREFIX . $user->name);
 				
 				if ($this->options['highlight'] && !$acls) {
 					$result .= "<div class='row green'>";
@@ -225,7 +227,7 @@
 				$result .= "<div class='cell nowrap'>";
 				if ($acls) {
 					foreach ($acls as $acl) {
-						$result .= $acl->asUnorderedList();
+						$result .= $acl->asUnorderedList(self::LOCAL_PREFIX . $user->name);
 						$result .= "<br />";
 					}
 				}
@@ -265,7 +267,7 @@
 				$result .= "<div class='cell nowrap'>";
 				if ($acls) {
 					foreach ($acls as $acl) {
-						$result .= $acl->asUnorderedList();
+						$result .= $acl->asUnorderedList($group->name);
 						$result .= "<br />";
 					}
 				}
