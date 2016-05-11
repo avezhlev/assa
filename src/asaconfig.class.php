@@ -13,6 +13,7 @@
 		private $access_lists = array();
 		private $nat_rules = array();
 		private $public_services = array();
+		private $routes = array();
 			
 
 		function __construct($uploaded_file, $options) {
@@ -28,6 +29,7 @@
 			$this->access_lists = $data['acl'];
 			$this->nat_rules = $data['nat'];
 			$this->public_services = $data['ps'];
+			$this->routes = $data['routes'];
 		}
 		
 		
@@ -41,6 +43,7 @@
 			$this->showNetworkGroups().
 			$this->showUsers().
 			$this->showUserGroups().
+			$this->showRoutes().
 			$this->showNATRules().
 			$this->showPublicServices().
 			$this->showAccessLists().
@@ -77,6 +80,7 @@
 			$result .= "<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"groups\")'>Network groups</a></li>";
 			$result .= "<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"users\")'>Users</a></li>";
 			$result .= "<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"usergroups\")'>User groups</a></li>";
+			$result .= "<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"routes\")'>Routes</a></li>";
 			$result .= "<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"natrules\")'>NAT rules</a></li>";
 			$result .= "<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"publicservices\")'>Public services</a></li>";
 			$result .= "<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"accesslists\")'>Access control lists</a></li>";
@@ -269,6 +273,24 @@
 
 				$result .= "</div>";
 				
+			}
+			$result .= "</div></div>";
+			
+			return $result;
+		}
+		
+		
+		function showRoutes() {
+			
+			$result = "<div id='routes' class='tabcontent'>";
+			$result .= "<div class='table'>";
+			
+			$result .= "<div class='row header red'><div class='cell'>Route</div></div>";
+			
+			foreach ($this->routes as $route) {				
+				$result .= "<div class='row'><div class='cell'>";
+				$result .= $route->asString();
+				$result .= "</div></div>";
 			}
 			$result .= "</div></div>";
 			

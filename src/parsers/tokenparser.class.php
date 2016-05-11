@@ -7,6 +7,7 @@
 	require_once("accesslistparser.class.php");
 	require_once("natparser.class.php");
 	require_once("publicserviceparser.class.php");
+	require_once("routeparser.class.php");
 
 	class TokenParser {
 		
@@ -19,6 +20,7 @@
 			$access_lists = array();
 			$nat_rules = array();
 			$public_services = array();
+			$routes = array();
 		
 			$tokenizer = FileTokenizer::getInstance($uploaded_file);
 			
@@ -74,6 +76,11 @@
 						}
 						break;
 					
+					case RouteParser::SCOPE:
+						if ($data = RouteParser::parse()) {
+							$routes[] = $data;
+						}
+						break;
 				}
 				
 			}
@@ -84,7 +91,8 @@
 						'user-groups' => $user_groups,
 						'acl' => $access_lists,
 						'nat' => $nat_rules,
-						'ps' => $public_services
+						'ps' => $public_services,
+						'routes' => $routes
 						);
 			
 		}
