@@ -1,8 +1,8 @@
 <?php
 
-	require_once("commoncontainer.class.php");
+	require_once("commonparent.class.php");
 
-	class NetworkGroup extends CommonContainer {
+	class NetworkGroup extends CommonParent {
 		
 		const TYPE = "object-group network";
 		

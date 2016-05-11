@@ -2,7 +2,7 @@
 
 	require_once("filetokenizer.class.php");
 	require_once("publicserviceparser.class.php");
-	require_once(__DIR__ . "/../inc/commonobject.class.php");
+	require_once(__DIR__ . "/../inc/commoncontainer.class.php");
 	require_once(__DIR__ . "/../inc/networkobject.class.php");
 
 	class ObjectParser {
@@ -30,7 +30,7 @@
 						while (($token = $tokenizer->nextToken()) !== FileTokenizer::EOL_MARK) {
 							$child_name .= $token . " ";
 						}
-						$network_object->addChild(new CommonObject(trim($child_name), $child_type));
+						$network_object->addChild(new CommonContainer(trim($child_name), $child_type));
 					}
 					$tokenizer->previousToken();
 					

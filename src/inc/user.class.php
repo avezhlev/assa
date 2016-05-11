@@ -1,8 +1,8 @@
 <?php
 
-	require_once("commoncontainer.class.php");
+	require_once("commonparent.class.php");
 
-	class User extends CommonContainer {
+	class User extends CommonParent {
 		
 		const TYPE = "user";
 		const SUBSCOPE = "attributes";

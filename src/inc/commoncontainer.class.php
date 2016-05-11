@@ -1,15 +1,23 @@
 <?php
 
-	require_once("commonobject.class.php");
-
-	class CommonContainer extends CommonObject{
+	class CommonContainer {
 		
 		const TYPE = "common-container";
+	
+		public $name;
+		public $type;
 		
-		public $children = array();
+		function __construct($name, $type = self::TYPE) {
+			$this->name = $name;
+			$this->type = $type;
+		}
 		
-		function addChild($child) {
-			$this->children[] = $child;
+		function setType($type) {
+			$this->type = $type;
+		}
+		
+		function getType() {
+			return $this->type;
 		}
 	
 	}

@@ -1,7 +1,7 @@
 <?php
 
 	require_once("filetokenizer.class.php");
-	require_once(__DIR__ . "/../inc/commonobject.class.php");
+	require_once(__DIR__ . "/../inc/commoncontainer.class.php");
 	require_once(__DIR__ . "/../inc/accesslist.class.php");
 
 	class AccessListParser {
@@ -36,7 +36,7 @@
 					$child_name .= $token . " ";
 				}
 					
-				$acl->addChild(new CommonObject(trim($child_name), $child_type));
+				$acl->addChild(new CommonContainer(trim($child_name), $child_type));
 					
 				if (self::SCOPE === $tokenizer->nextToken()) {
 					$next_acl_name = $tokenizer->nextToken();

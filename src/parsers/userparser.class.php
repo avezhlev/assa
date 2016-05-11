@@ -1,7 +1,7 @@
 <?php
 
 	require_once("filetokenizer.class.php");
-	require_once(__DIR__ . "/../inc/commonobject.class.php");
+	require_once(__DIR__ . "/../inc/commoncontainer.class.php");
 	require_once(__DIR__ . "/../inc/user.class.php");
 
 	class UserParser {
@@ -25,7 +25,7 @@
 				while (($token = $tokenizer->nextToken()) !== FileTokenizer::EOL_MARK) {
 					$child_name .= $token . " ";
 				}
-				$user->addChild(new CommonObject(trim($child_name), $child_type));
+				$user->addChild(new CommonContainer(trim($child_name), $child_type));
 			}
 			
 			$tokenizer->previousToken();

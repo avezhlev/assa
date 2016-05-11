@@ -3,7 +3,6 @@
 	require_once("filetokenizer.class.php");
 	require_once("networkgroupparser.class.php");
 	require_once("usergroupparser.class.php");
-	require_once(__DIR__ . "/../inc/commonobject.class.php");
 
 	class ObjectGroupParser {
 		

@@ -1,8 +1,8 @@
 <?php
 
-	require_once("commonobject.class.php");
+	require_once("commoncontainer.class.php");
 
-	class NatRule extends CommonObject {
+	class NatRule extends CommonContainer {
 		
 		const TYPE = "nat";
 		const SOURCE_MARK = "source";

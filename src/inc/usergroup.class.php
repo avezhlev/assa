@@ -1,9 +1,9 @@
 <?php
 
-	require_once("commoncontainer.class.php");
+	require_once("commonparent.class.php");
 	require_once("user.class.php");
 
-	class UserGroup extends CommonContainer {
+	class UserGroup extends CommonParent {
 		
 		const TYPE = "object-group user";
 		

@@ -1,8 +1,8 @@
 <?php
 
-	require_once("commoncontainer.class.php");
+	require_once("commonparent.class.php");
 
-	class AccessList extends CommonContainer {
+	class AccessList extends CommonParent {
 		
 		const TYPE = "access-list";
 		

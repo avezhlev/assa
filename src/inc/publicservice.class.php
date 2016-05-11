@@ -1,9 +1,9 @@
 <?php
 
-	require_once("commonobject.class.php");
+	require_once("commoncontainer.class.php");
 	require_once("networkobject.class.php");
 
-	class PublicService extends CommonObject {
+	class PublicService extends CommonContainer {
 		
 		const TYPE = "nat";
 		
