@@ -8,6 +8,7 @@
 	require_once("natparser.class.php");
 	require_once("publicserviceparser.class.php");
 	require_once("routeparser.class.php");
+	require_once("ipv6parser.class.php");
 
 	class TokenParser {
 		
@@ -79,6 +80,17 @@
 					case RouteParser::SCOPE:
 						if ($data = RouteParser::parse()) {
 							$routes[] = $data;
+						}
+						break;
+						
+					case IPv6Parser::SCOPE:
+						if ($data = IPv6Parser::parse()) {
+							switch (true) {
+								
+								case $data instanceof Route:
+									$routes[] = $data;
+									break;
+							}
 						}
 						break;
 				}

@@ -5,7 +5,9 @@
 	class Route extends CommonContainer {
 		
 		const TYPE = "route";
+		const IPV6_TYPE = "ipv6 route";
 		
+		public $ip_version;
 		public $subnet;
 		public $mask;
 		public $next_hop;
@@ -18,8 +20,14 @@
 		
 		
 		function asString() {
-						
-			$result = self::TYPE . " " . $this->name . " <b>" . $this->subnet . " " . $this->mask . " " . $this->next_hop . "</b> " . $this->metric;
+			
+			if ($this->ip_version === 6) {
+				$result = self::IPV6_TYPE;
+			} else {
+				$result = self::TYPE;
+			}
+			
+			$result .= " " . $this->name . " <b>" . $this->subnet . ($this->ip_version === 6 ? "/" : " ") . $this->mask . " " . $this->next_hop . "</b> " . $this->metric;
 			
 			return $result;
 		}
