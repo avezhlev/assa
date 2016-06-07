@@ -58,7 +58,7 @@
 			
 			$result = "<head></head>";
 			$result .= "<body><link href='css/styles.css' rel='stylesheet'>";
-			$result .= "<div class='wrapper'>";
+			//$result .= "<div class='wrapper'>";
 			
 			return $result;
 		}
@@ -75,7 +75,7 @@
 		}
 		
 		
-		function showTabs() {
+		function showTabs() {	
 			
 			$result = "<ul class='tab'>";
 			$result .= "<li><a href='javascript:void(0)' class='tablinks active' onclick='showTab(event, \"objects\")'>Network objects</a></li>";
@@ -87,6 +87,7 @@
 			$result .= "<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"publicservices\")'>Public services</a></li>";
 			$result .= "<li><a href='javascript:void(0)' class='tablinks' onclick='showTab(event, \"accesslists\")'>Access control lists</a></li>";
 			$result .= "</ul><br />";
+			$result .= "<div class='wrapper'>";
 			
 			return $result;
 		}
