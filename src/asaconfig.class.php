@@ -56,9 +56,8 @@
 		
 		function showHeader() {
 			
-			$result = "<head></head>";
+			$result = "<head><title>Cisco ASA config parser</title></head>";
 			$result .= "<body><link href='css/styles.css' rel='stylesheet'>";
-			//$result .= "<div class='wrapper'>";
 			
 			return $result;
 		}
