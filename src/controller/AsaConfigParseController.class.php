@@ -1,9 +1,9 @@
 <?php
 
-require_once(__DIR__ . "/../parser/AsaConfigFileParser.class.php");
-require_once(__DIR__."/../util/Utils.class.php");
+require_once(__DIR__ . "/../parser/AsaConfigParser.class.php");
+require_once(__DIR__ . "/../util/Utils.class.php");
 
-class AsaConfiguration {
+class AsaConfigParseController {
 
     const LOCAL_PREFIX = "LOCAL\\";
 
@@ -19,14 +19,17 @@ class AsaConfiguration {
     private $routes = array();
 
 
-    function __construct($options) {
+    function __construct($file, $options) {
 
         $this->options = $options;
+
+        $this->getConfiguration($file);
+        $this->showData();
     }
 
     function getConfiguration($file) {
 
-        $data = AsaConfigFileParser::parse($file);
+        $data = AsaConfigParser::parse($file);
 
         $this->network_objects = $data['objects'];
         $this->network_groups = $data['groups'];
@@ -36,8 +39,6 @@ class AsaConfiguration {
         $this->nat_rules = $data['nat'];
         $this->public_services = $data['ps'];
         $this->routes = $data['routes'];
-
-        return $data;
     }
 
 

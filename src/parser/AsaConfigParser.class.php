@@ -10,7 +10,7 @@ require_once("entity/PublicServiceParser.class.php");
 require_once("entity/RouteParser.class.php");
 require_once("entity/IPv6Parser.class.php");
 
-class AsaConfigFileParser {
+class AsaConfigParser {
 
     static function parse($uploaded_file) {
 

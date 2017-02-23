@@ -4,7 +4,7 @@
 	ini_set("display_startup_errors", 1);
 	error_reporting(E_ALL);
 
-	require_once("src/entity/AsaConfiguration.class.php");
+	require_once("src/controller/AsaConfigParseController.class.php");
 
 	$uploads_dir = __DIR__ . "/uploads/";
 	$uploaded_file = $uploads_dir . basename($_FILES['userfile']['name']);
@@ -14,10 +14,7 @@
 		$options = array();
 		$options['highlight'] = isset($_POST['highlight']);
 		
-		$configuration = new AsaConfiguration($options);
-		$configuration->getConfiguration($uploaded_file);
-
-		$configuration->showData();
+		new AsaConfigParseController($uploaded_file, $options);
 	}
 
 ?>
