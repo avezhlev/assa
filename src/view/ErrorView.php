@@ -7,7 +7,7 @@
 </head>
 <body>
 <div style="text-align: center;">
-    <h3>Not valid file format!</h3>
+    <h3><?php echo $error ?></h3>
 </div>
 </body>
 </html>

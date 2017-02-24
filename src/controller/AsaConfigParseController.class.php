@@ -6,18 +6,34 @@ require_once(__DIR__ . "/../util/Utils.class.php");
 
 class AsaConfigParseController {
 
+    const UPLOADS_DIR = __DIR__ . "/../../uploads/";
+    const FILE_TAG = "userfile";
 
-    function __construct($file, $options) {
+    const ERROR_NOT_VALID_FILE_FORMAT = "Not valid file format";
+    const ERROR_CHECK_PERMISSIONS = "Check permissions for uploads directory";
 
-        $data = AsaConfigParser::parse($file);
+    function __construct() {
 
-        if (!$this->isEmpty($data)) {
-            $view = new AsaConfigView($options);
-            echo $view->getHtml($data);
+        $uploadedFile = self::UPLOADS_DIR . basename($_FILES[self::FILE_TAG]['name']);
+
+        if (move_uploaded_file($_FILES[self::FILE_TAG]["tmp_name"], $uploadedFile)) {
+
+            $data = AsaConfigParser::parse($uploadedFile);
+
+            if (!$this->isEmpty($data)) {
+                $options = array();
+                $options[AsaConfigView::OPTION_HIGHLIGHT] = isset($_POST[AsaConfigView::OPTION_HIGHLIGHT]);
+                $view = new AsaConfigView($options);
+                echo $view->getHtml($data);
+                return;
+            } else {
+                $error = self::ERROR_NOT_VALID_FILE_FORMAT;
+            }
         } else {
-            include(__DIR__ . "/../view/NotValidFileFormat.html");
+            $error = self::ERROR_CHECK_PERMISSIONS;
         }
 
+        include(__DIR__ . "/../view/ErrorView.php");
     }
 
     function isEmpty($data) {

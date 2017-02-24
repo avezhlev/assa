@@ -3,6 +3,7 @@
 class AsaConfigView {
 
     const LOCAL_PREFIX = "LOCAL\\";
+    const OPTION_HIGHLIGHT = "highlight";
 
     private $options;
 
@@ -102,7 +103,7 @@ class AsaConfigView {
             $service_rules = $this->mentionedInPublicService($obj->name);
             $acls = $this->mentionedInACL($obj->name);
 
-            if ($this->options['highlight'] && !($rules || $service_rules || $acls)) {
+            if ($this->options[self::OPTION_HIGHLIGHT] && !($rules || $service_rules || $acls)) {
                 $result .= "<div class='row blue'>";
             } else {
                 $result .= "<div class='row'>";
@@ -159,7 +160,7 @@ class AsaConfigView {
             $rules = $this->mentionedInNATRule($group->name);
             $acls = $this->mentionedInACL($group->name);
 
-            if ($this->options['highlight'] && !($rules || $acls)) {
+            if ($this->options[self::OPTION_HIGHLIGHT] && !($rules || $acls)) {
                 $result .= "<div class='row blue'>";
             } else {
                 $result .= "<div class='row'>";
@@ -208,7 +209,7 @@ class AsaConfigView {
 
             $acls = $this->mentionedInACL(self::LOCAL_PREFIX . $user->name);
 
-            if ($this->options['highlight'] && !$acls) {
+            if ($this->options[self::OPTION_HIGHLIGHT] && !$acls) {
                 $result .= "<div class='row green'>";
             } else {
                 $result .= "<div class='row'>";
@@ -248,7 +249,7 @@ class AsaConfigView {
 
             $acls = $this->mentionedInACL($group->name);
 
-            if ($this->options['highlight'] && !$acls) {
+            if ($this->options[self::OPTION_HIGHLIGHT] && !$acls) {
                 $result .= "<div class='row green'>";
             } else {
                 $result .= "<div class='row'>";
