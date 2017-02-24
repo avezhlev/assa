@@ -40,7 +40,7 @@ class AsaConfigView {
             $this->getUsers() .
             $this->getUserGroups() .
             $this->getRoutes() .
-            $this->getNATRules() .
+            $this->getNatRules() .
             $this->getPublicServices() .
             $this->getAccessLists() .
             $this->getFooter();
@@ -99,11 +99,11 @@ class AsaConfigView {
 
         foreach ($this->networkObjects as $obj) {
 
-            $rules = $this->mentionedInNATRule($obj->name);
-            $service_rules = $this->mentionedInPublicService($obj->name);
-            $acls = $this->mentionedInACL($obj->name);
+            $rules = $this->mentionedInNatRules($obj->name);
+            $services = $this->mentionedInPublicServices($obj->name);
+            $lists = $this->mentionedInAccessLists($obj->name);
 
-            if ($this->options[self::OPTION_HIGHLIGHT] && !($rules || $service_rules || $acls)) {
+            if ($this->options[self::OPTION_HIGHLIGHT] && !($rules || $services || $lists)) {
                 $result .= "<div class='row blue'>";
             } else {
                 $result .= "<div class='row'>";
@@ -119,17 +119,17 @@ class AsaConfigView {
                     $result .= $rule->asString($obj->name) . "<br /><br />";
                 }
             }
-            if ($service_rules) {
-                foreach ($service_rules as $rule) {
-                    $result .= $rule->asString($obj->name) . "<br /><br />";
+            if ($services) {
+                foreach ($services as $service) {
+                    $result .= $service->asString($obj->name) . "<br /><br />";
                 }
             }
             $result .= "</div>";
 
             $result .= "<div class='cell nowrap'>";
-            if ($acls) {
-                foreach ($acls as $acl) {
-                    $result .= $acl->asUnorderedList($obj->name);
+            if ($lists) {
+                foreach ($lists as $list) {
+                    $result .= $list->asUnorderedList($obj->name);
                     $result .= "<br />";
                 }
             }
@@ -157,10 +157,10 @@ class AsaConfigView {
 
         foreach ($this->networkGroups as $group) {
 
-            $rules = $this->mentionedInNATRule($group->name);
-            $acls = $this->mentionedInACL($group->name);
+            $rules = $this->mentionedInNatRules($group->name);
+            $lists = $this->mentionedInAccessLists($group->name);
 
-            if ($this->options[self::OPTION_HIGHLIGHT] && !($rules || $acls)) {
+            if ($this->options[self::OPTION_HIGHLIGHT] && !($rules || $lists)) {
                 $result .= "<div class='row blue'>";
             } else {
                 $result .= "<div class='row'>";
@@ -179,9 +179,9 @@ class AsaConfigView {
             $result .= "</div>";
 
             $result .= "<div class='cell nowrap'>";
-            if ($acls) {
-                foreach ($acls as $acl) {
-                    $result .= $acl->asUnorderedList($group->name);
+            if ($lists) {
+                foreach ($lists as $list) {
+                    $result .= $list->asUnorderedList($group->name);
                     $result .= "<br />";
                 }
             }
@@ -207,9 +207,9 @@ class AsaConfigView {
 
         foreach ($this->users as $user) {
 
-            $acls = $this->mentionedInACL(self::LOCAL_PREFIX . $user->name);
+            $lists = $this->mentionedInAccessLists(self::LOCAL_PREFIX . $user->name);
 
-            if ($this->options[self::OPTION_HIGHLIGHT] && !$acls) {
+            if ($this->options[self::OPTION_HIGHLIGHT] && !$lists) {
                 $result .= "<div class='row green'>";
             } else {
                 $result .= "<div class='row'>";
@@ -220,9 +220,9 @@ class AsaConfigView {
             $result .= "</div>";
 
             $result .= "<div class='cell nowrap'>";
-            if ($acls) {
-                foreach ($acls as $acl) {
-                    $result .= $acl->asUnorderedList(self::LOCAL_PREFIX . $user->name);
+            if ($lists) {
+                foreach ($lists as $list) {
+                    $result .= $list->asUnorderedList(self::LOCAL_PREFIX . $user->name);
                     $result .= "<br />";
                 }
             }
@@ -247,9 +247,9 @@ class AsaConfigView {
 
         foreach ($this->userGroups as $group) {
 
-            $acls = $this->mentionedInACL($group->name);
+            $lists = $this->mentionedInAccessLists($group->name);
 
-            if ($this->options[self::OPTION_HIGHLIGHT] && !$acls) {
+            if ($this->options[self::OPTION_HIGHLIGHT] && !$lists) {
                 $result .= "<div class='row green'>";
             } else {
                 $result .= "<div class='row'>";
@@ -260,9 +260,9 @@ class AsaConfigView {
             $result .= "</div>";
 
             $result .= "<div class='cell nowrap'>";
-            if ($acls) {
-                foreach ($acls as $acl) {
-                    $result .= $acl->asUnorderedList($group->name);
+            if ($lists) {
+                foreach ($lists as $list) {
+                    $result .= $list->asUnorderedList($group->name);
                     $result .= "<br />";
                 }
             }
@@ -295,7 +295,7 @@ class AsaConfigView {
     }
 
 
-    function getNATRules() {
+    function getNatRules() {
 
         $result = "<div id='natrules' class='tabcontent'>";
         $result .= "<div class='table'>";
@@ -338,9 +338,9 @@ class AsaConfigView {
 
         $result .= "<div class='row header red'><div class='cell'>ACL</div></div>";
 
-        foreach ($this->accessLists as $acl) {
+        foreach ($this->accessLists as $list) {
             $result .= "<div class='row'><div class='cell'>";
-            $result .= $acl->asUnorderedList();
+            $result .= $list->asUnorderedList();
             $result .= "</div></div>";
         }
         $result .= "</div></div>";
@@ -349,19 +349,19 @@ class AsaConfigView {
     }
 
 
-    function mentionedInNATRule($name) {
+    function mentionedInNatRules($name) {
 
         $results = array();
 
         foreach ($this->natRules as $rule) {
-            foreach ($rule->sourceObjects as $obj) {
-                if ($obj === $name) {
+            foreach ($rule->sourceObjects as $object) {
+                if ($object === $name) {
                     $results[] = $rule;
                     break 2;
                 }
             }
-            foreach ($rule->destinationObjects as $obj) {
-                if ($obj === $name) {
+            foreach ($rule->destinationObjects as $object) {
+                if ($object === $name) {
                     $results[] = $rule;
                     break 2;
                 }
@@ -373,13 +373,13 @@ class AsaConfigView {
     }
 
 
-    function mentionedInPublicService($name) {
+    function mentionedInPublicServices($name) {
 
         $results = array();
 
-        foreach ($this->publicServices as $rule) {
-            if ($rule->innerObject === $name || $rule->outerObject === $name) {
-                $results[] = $rule;
+        foreach ($this->publicServices as $service) {
+            if ($service->innerObject === $name || $service->outerObject === $name) {
+                $results[] = $service;
                 break;
             }
         }
@@ -389,14 +389,14 @@ class AsaConfigView {
     }
 
 
-    function mentionedInACL($name) {
+    function mentionedInAccessLists($name) {
 
         $results = array();
 
-        foreach ($this->accessLists as $acl) {
-            foreach ($acl->children as $child) {
+        foreach ($this->accessLists as $list) {
+            foreach ($list->children as $child) {
                 if (strpos($child->name . " ", " " . $name . " ") !== false) {
-                    $results[] = $acl;
+                    $results[] = $list;
                     break;
                 }
             }
