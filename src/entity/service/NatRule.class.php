@@ -10,11 +10,11 @@ class NatRule extends CommonEntity {
     const SERVICE_MARK = "service";
     const DESCRIPTION_MARK = "description";
 
-    public $source_type;
-    public $destination_type;
-    public $source_objects = array();
-    public $destination_objects = array();
-    public $service_objects = array();
+    public $sourceType;
+    public $destinationType;
+    public $sourceObjects = array();
+    public $destinationObjects = array();
+    public $serviceObjects = array();
     public $options = array();
     public $decription;
 
@@ -24,17 +24,17 @@ class NatRule extends CommonEntity {
     }
 
 
-    function asString($highlight_object = "") {
+    function asString($highlightObject = "") {
 
-        $highlight_all = empty($highlight_object);
+        $highlight_all = empty($highlightObject);
 
         $result = self::TYPE . " " . $this->name . " ";
 
-        if (count($this->source_objects)) {
-            $result .= self::SOURCE_MARK . " " . $this->source_type . " ";
+        if (count($this->sourceObjects)) {
+            $result .= self::SOURCE_MARK . " " . $this->sourceType . " ";
             $is_first = true;
-            foreach ($this->source_objects as $obj) {
-                if ($highlight_all || ($obj === $highlight_object)) {
+            foreach ($this->sourceObjects as $obj) {
+                if ($highlight_all || ($obj === $highlightObject)) {
                     $result .= "<b>" . $obj . "</b>" . " ";
                 } else {
                     $result .= $obj . " ";
@@ -46,11 +46,11 @@ class NatRule extends CommonEntity {
             }
         }
 
-        if (count($this->destination_objects)) {
-            $result .= self::DESTINATION_MARK . " " . $this->destination_type . " ";
+        if (count($this->destinationObjects)) {
+            $result .= self::DESTINATION_MARK . " " . $this->destinationType . " ";
             $is_first = true;
-            foreach ($this->destination_objects as $obj) {
-                if ($highlight_all || ($obj === $highlight_object)) {
+            foreach ($this->destinationObjects as $obj) {
+                if ($highlight_all || ($obj === $highlightObject)) {
                     $result .= "<b>" . $obj . "</b>" . " ";
                 } else {
                     $result .= $obj . " ";
@@ -62,11 +62,11 @@ class NatRule extends CommonEntity {
             }
         }
 
-        if (count($this->service_objects)) {
+        if (count($this->serviceObjects)) {
             $result .= self::SERVICE_MARK . " ";
             $is_first = true;
-            foreach ($this->service_objects as $obj) {
-                if ($highlight_all || ($obj === $highlight_object)) {
+            foreach ($this->serviceObjects as $obj) {
+                if ($highlight_all || ($obj === $highlightObject)) {
                     $result .= "<b>" . $obj . "</b>" . " ";
                 } else {
                     $result .= $obj . " ";

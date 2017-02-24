@@ -7,10 +7,10 @@ class Route extends CommonEntity {
     const TYPE = "route";
     const IPV6_TYPE = "ipv6 route";
 
-    public $ip_version;
+    public $ipVersion;
     public $subnet;
     public $mask;
-    public $next_hop;
+    public $nextHop;
     public $metric;
 
 
@@ -21,13 +21,13 @@ class Route extends CommonEntity {
 
     function asString() {
 
-        if ($this->ip_version === 6) {
+        if ($this->ipVersion === 6) {
             $result = self::IPV6_TYPE;
         } else {
             $result = self::TYPE;
         }
 
-        $result .= " " . $this->name . " <b>" . $this->subnet . "/" . $this->mask . "</b> --> <b>" . $this->next_hop . "</b> " . $this->metric;
+        $result .= " " . $this->name . " <b>" . $this->subnet . "/" . $this->mask . "</b> --> <b>" . $this->nextHop . "</b> " . $this->metric;
 
         return $result;
     }

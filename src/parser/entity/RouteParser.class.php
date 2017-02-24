@@ -7,15 +7,15 @@ class RouteParser {
 
     const SCOPE = "route";
 
-    static function parse($ip_version = 4) {
+    static function parse($ipVersion = 4) {
 
         $tokenizer = FileTokenizer::getInstance();
 
         $route = new Route($tokenizer->nextToken());
 
-        $route->ip_version = $ip_version;
+        $route->ipVersion = $ipVersion;
 
-        if ($ip_version === 6) {
+        if ($ipVersion === 6) {
             $data = preg_split("~/~", $tokenizer->nextToken());
             $route->subnet = $data[0];
             $route->mask = $data[1];
@@ -23,7 +23,7 @@ class RouteParser {
             $route->subnet = $tokenizer->nextToken();
             $route->mask = $tokenizer->nextToken();
         }
-        $route->next_hop = $tokenizer->nextToken();
+        $route->nextHop = $tokenizer->nextToken();
         $route->metric = $tokenizer->nextToken();
 
         return $route;

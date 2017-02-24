@@ -13,13 +13,13 @@ class AccessListParser {
 
         $tokenizer = FileTokenizer::getInstance();
 
-        $acl_name = $tokenizer->nextToken();
-        $acl = new AccessList($acl_name);
+        $aclName = $tokenizer->nextToken();
+        $acl = new AccessList($aclName);
 
-        $next_acl_name = $acl_name;
-        $step_back = false;
+        $nextAclName = $aclName;
+        $stepBack = false;
 
-        while ($acl_name === $next_acl_name) {
+        while ($aclName === $nextAclName) {
 
             $token = $tokenizer->nextToken();
             if (self::isACLType($token)) {
@@ -29,26 +29,26 @@ class AccessListParser {
                 $token = $tokenizer->nextToken();
             }
 
-            $child_type = $token;
-            $child_name = "";
+            $childType = $token;
+            $childName = "";
 
             while (($token = $tokenizer->nextToken()) !== FileTokenizer::EOL_MARK) {
-                $child_name .= $token . " ";
+                $childName .= $token . " ";
             }
 
-            $acl->addChild(new CommonEntity(trim($child_name), $child_type));
+            $acl->addChild(new CommonEntity(trim($childName), $childType));
 
             if (self::SCOPE === $tokenizer->nextToken()) {
-                $next_acl_name = $tokenizer->nextToken();
-                $step_back = true;
+                $nextAclName = $tokenizer->nextToken();
+                $stepBack = true;
             } else {
-                $next_acl_name = "";
+                $nextAclName = "";
             }
 
         }
 
         $tokenizer->previousToken();
-        if ($step_back) {
+        if ($stepBack) {
             $tokenizer->previousToken();
         }
 

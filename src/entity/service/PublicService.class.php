@@ -7,9 +7,9 @@ class PublicService extends CommonEntity {
 
     const TYPE = "nat";
 
-    public $service_type;
-    public $outer_object;
-    public $inner_object;
+    public $serviceType;
+    public $outerObject;
+    public $innerObject;
     public $options = array();
 
 
@@ -18,16 +18,16 @@ class PublicService extends CommonEntity {
     }
 
 
-    function asString($highlight_object = "") {
+    function asString($highlightObject = "") {
 
-        $highlight_all = empty($highlight_object);
+        $highlightAll = empty($highlightObject);
 
-        $result = self::TYPE . " " . $this->name . " " . $this->service_type . " ";
+        $result = self::TYPE . " " . $this->name . " " . $this->serviceType . " ";
 
-        if ($highlight_all || ($this->inner_object === $highlight_object)) {
-            $result .= "<b>" . $this->inner_object . "</b> ";
+        if ($highlightAll || ($this->innerObject === $highlightObject)) {
+            $result .= "<b>" . $this->innerObject . "</b> ";
         } else {
-            $result .= $this->inner_object . " ";
+            $result .= $this->innerObject . " ";
         }
 
         foreach ($this->options as $option) {
@@ -35,10 +35,10 @@ class PublicService extends CommonEntity {
         }
 
         $result .= "<i>(" . NetworkObject::TYPE . " ";
-        if ($highlight_all || ($this->outer_object === $highlight_object)) {
-            $result .= "<b>" . $this->outer_object . "</b>";
+        if ($highlightAll || ($this->outerObject === $highlightObject)) {
+            $result .= "<b>" . $this->outerObject . "</b>";
         } else {
-            $result .= $this->outer_object;
+            $result .= $this->outerObject;
         }
         $result .= ")</i>";
 

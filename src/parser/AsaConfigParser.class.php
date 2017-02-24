@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__."/../tokenizer/FileTokenizer.class.php");
+require_once(__DIR__ . "/../tokenizer/FileTokenizer.class.php");
 require_once("entity/ObjectParser.class.php");
 require_once("entity/ObjectGroupParser.class.php");
 require_once("entity/UserParser.class.php");
@@ -12,16 +12,25 @@ require_once("entity/IPv6Parser.class.php");
 
 class AsaConfigParser {
 
+    const NETWORK_OBJECTS = 0;
+    const NETWORK_GROUPS = 1;
+    const USERS = 2;
+    const USER_GROUPS = 3;
+    const ROUTES = 4;
+    const NAT_RULES = 5;
+    const PUBLIC_SERVICES = 6;
+    const ACCESS_LISTS = 7;
+
     static function parse($uploaded_file) {
 
-        $network_objects = array();
-        $network_groups = array();
+        $networkObjects = array();
+        $networkGroups = array();
         $users = array();
-        $user_groups = array();
-        $access_lists = array();
-        $nat_rules = array();
-        $public_services = array();
+        $userGroups = array();
         $routes = array();
+        $natRules = array();
+        $publicServices = array();
+        $accessLists = array();
 
         $tokenizer = FileTokenizer::getInstance($uploaded_file);
 
@@ -34,11 +43,11 @@ class AsaConfigParser {
                         switch (true) {
 
                             case $data instanceof NetworkObject:
-                                $network_objects[] = $data;
+                                $networkObjects[] = $data;
                                 break;
 
                             case $data instanceof PublicService:
-                                $public_services[] = $data;
+                                $publicServices[] = $data;
                                 break;
                         }
                     }
@@ -49,11 +58,11 @@ class AsaConfigParser {
                         switch (true) {
 
                             case $data instanceof NetworkGroup:
-                                $network_groups[] = $data;
+                                $networkGroups[] = $data;
                                 break;
 
                             case $data instanceof UserGroup:
-                                $user_groups[] = $data;
+                                $userGroups[] = $data;
                                 break;
                         }
                     }
@@ -67,13 +76,13 @@ class AsaConfigParser {
 
                 case AccessListParser::SCOPE:
                     if ($data = AccessListParser::parse()) {
-                        $access_lists[] = $data;
+                        $accessLists[] = $data;
                     }
                     break;
 
                 case NatRuleParser::SCOPE:
                     if ($data = NatRuleParser::parse()) {
-                        $nat_rules[] = $data;
+                        $natRules[] = $data;
                     }
                     break;
 
@@ -97,14 +106,15 @@ class AsaConfigParser {
 
         }
 
-        return array('objects' => $network_objects,
-            'groups' => $network_groups,
-            'users' => $users,
-            'user-groups' => $user_groups,
-            'acl' => $access_lists,
-            'nat' => $nat_rules,
-            'ps' => $public_services,
-            'routes' => $routes
+        return array(
+            self::NETWORK_OBJECTS => $networkObjects,
+            self::NETWORK_GROUPS => $networkGroups,
+            self::USERS => $users,
+            self::USER_GROUPS => $userGroups,
+            self::ROUTES => $routes,
+            self::NAT_RULES => $natRules,
+            self::PUBLIC_SERVICES => $publicServices,
+            self::ACCESS_LISTS => $accessLists
         );
 
     }

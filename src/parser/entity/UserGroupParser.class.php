@@ -13,20 +13,20 @@ class UserGroupParser {
 
         $tokenizer = FileTokenizer::getInstance();
 
-        $user_group = new UserGroup($tokenizer->nextToken());
+        $userGroup = new UserGroup($tokenizer->nextToken());
         $tokenizer->nextToken();//EOL
         while (($token = $tokenizer->nextToken()) === self::CHILD_TYPE) {
             $data = preg_split("~\\\\~", $tokenizer->nextToken());
-            $child_type = $data[0];
-            $child_name = $data[1];
+            $childType = $data[0];
+            $childName = $data[1];
             while (($token = $tokenizer->nextToken()) !== FileTokenizer::EOL_MARK) {
-                $child_name .= " " . $token;
+                $childName .= " " . $token;
             }
-            $user_group->addChild(new CommonEntity($child_name, $child_type));
+            $userGroup->addChild(new CommonEntity($childName, $childType));
         }
         $tokenizer->previousToken();
 
-        return $user_group;
+        return $userGroup;
     }
 
 }

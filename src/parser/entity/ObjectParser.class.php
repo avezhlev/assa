@@ -18,23 +18,23 @@ class ObjectParser {
         switch ($tokenizer->nextToken()) {
 
             case self::NETWORK_SUBSCOPE:
-                $network_object = new NetworkObject($tokenizer->nextToken());
+                $networkObject = new NetworkObject($tokenizer->nextToken());
                 $tokenizer->nextToken();//EOL
                 if (PublicServiceParser::SUBSCOPE === $tokenizer->nextToken()) {
-                    return PublicServiceParser::parse($network_object->name);
+                    return PublicServiceParser::parse($networkObject->name);
                 }
                 $tokenizer->previousToken();
                 while (self::isNetworkObjectChild($token = $tokenizer->nextToken())) {
-                    $child_type = $token;
-                    $child_name = "";
+                    $childType = $token;
+                    $childName = "";
                     while (($token = $tokenizer->nextToken()) !== FileTokenizer::EOL_MARK) {
-                        $child_name .= $token . " ";
+                        $childName .= $token . " ";
                     }
-                    $network_object->addChild(new CommonEntity(trim($child_name), $child_type));
+                    $networkObject->addChild(new CommonEntity(trim($childName), $childType));
                 }
                 $tokenizer->previousToken();
 
-                return $network_object;
+                return $networkObject;
         }
 
         return false;

@@ -11,44 +11,44 @@ class NatRuleParser {
 
         $tokenizer = FileTokenizer::getInstance();
 
-        $nat_rule = new NatRule($tokenizer->nextToken());
+        $natRule = new NatRule($tokenizer->nextToken());
 
         if (NatRule::SOURCE_MARK === $tokenizer->nextToken()) {
-            $nat_rule->source_type = $tokenizer->nextToken();
-            $nat_rule->source_objects[] = $tokenizer->nextToken();
-            $nat_rule->source_objects[] = $tokenizer->nextToken();
+            $natRule->sourceType = $tokenizer->nextToken();
+            $natRule->sourceObjects[] = $tokenizer->nextToken();
+            $natRule->sourceObjects[] = $tokenizer->nextToken();
         } else {
             $tokenizer->previousToken();
         }
 
         if (NatRule::DESTINATION_MARK === $tokenizer->nextToken()) {
-            $nat_rule->destination_type = $tokenizer->nextToken();
-            $nat_rule->destination_objects[] = $tokenizer->nextToken();
-            $nat_rule->destination_objects[] = $tokenizer->nextToken();
+            $natRule->destinationType = $tokenizer->nextToken();
+            $natRule->destinationObjects[] = $tokenizer->nextToken();
+            $natRule->destinationObjects[] = $tokenizer->nextToken();
         } else {
             $tokenizer->previousToken();
         }
 
         if (NatRule::SERVICE_MARK === $tokenizer->nextToken()) {
-            $nat_rule->service_objects[] = $tokenizer->nextToken();
-            $nat_rule->service_objects[] = $tokenizer->nextToken();
+            $natRule->serviceObjects[] = $tokenizer->nextToken();
+            $natRule->serviceObjects[] = $tokenizer->nextToken();
         } else {
             $tokenizer->previousToken();
         }
 
-        $nat_rule->description = "";
+        $natRule->description = "";
         while (($token = $tokenizer->nextToken()) !== FileTokenizer::EOL_MARK) {
             if ($token === NatRule::DESCRIPTION_MARK) {
                 while (($token = $tokenizer->nextToken()) !== FileTokenizer::EOL_MARK) {
-                    $nat_rule->description .= $token . " ";
+                    $natRule->description .= $token . " ";
                 }
                 break;
             } else {
-                $nat_rule->options[] = $token;
+                $natRule->options[] = $token;
             }
         }
 
-        return $nat_rule;
+        return $natRule;
 
     }
 

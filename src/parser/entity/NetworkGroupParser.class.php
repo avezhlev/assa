@@ -15,26 +15,26 @@ class NetworkGroupParser {
 
         $tokenizer = FileTokenizer::getInstance();
 
-        $network_group = new NetworkGroup($tokenizer->nextToken());
+        $networkGroup = new NetworkGroup($tokenizer->nextToken());
         $tokenizer->nextToken();//EOL
         while (self::isNetworkGroupChild($token = $tokenizer->nextToken())) {
-            $child_type = $token;
+            $childType = $token;
             if ($token === self::CHILD_TYPES[0]) {
                 if (($next_token = $tokenizer->nextToken()) === self::CHILD_SUBTYPE) {
-                    $child_type .= " " . $next_token;
+                    $childType .= " " . $next_token;
                 } else {
                     $tokenizer->previousToken();
                 }
             }
-            $child_name = "";
+            $childName = "";
             while (($token = $tokenizer->nextToken()) !== FileTokenizer::EOL_MARK) {
-                $child_name .= $token . " ";
+                $childName .= $token . " ";
             }
-            $network_group->addChild(new CommonEntity(trim($child_name), $child_type));
+            $networkGroup->addChild(new CommonEntity(trim($childName), $childType));
         }
         $tokenizer->previousToken();
 
-        return $network_group;
+        return $networkGroup;
     }
 
 

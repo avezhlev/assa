@@ -11,16 +11,16 @@ class PublicServiceParser {
 
         $tokenizer = FileTokenizer::getInstance();
 
-        $public_service = new PublicService($tokenizer->nextToken());
-        $public_service->outer_object = $outer_object;
-        $public_service->service_type = $tokenizer->nextToken();
-        $public_service->inner_object = $tokenizer->nextToken();
+        $publicService = new PublicService($tokenizer->nextToken());
+        $publicService->outerObject = $outer_object;
+        $publicService->serviceType = $tokenizer->nextToken();
+        $publicService->innerObject = $tokenizer->nextToken();
 
         while (($token = $tokenizer->nextToken()) !== FileTokenizer::EOL_MARK) {
-            $public_service->options[] = $token;
+            $publicService->options[] = $token;
         }
 
-        return $public_service;
+        return $publicService;
     }
 
 }

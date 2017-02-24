@@ -20,13 +20,13 @@ class UserParser {
         $tokenizer->nextToken(); //move to EOL
 
         while (self::isAttributeType($token = $tokenizer->nextToken())) {
-            $child_type = $token;
-            $child_name = "";
+            $childType = $token;
+            $childName = "";
 
             while (($token = $tokenizer->nextToken()) !== FileTokenizer::EOL_MARK) {
-                $child_name .= $token . " ";
+                $childName .= $token . " ";
             }
-            $user->addChild(new CommonEntity(trim($child_name), $child_type));
+            $user->addChild(new CommonEntity(trim($childName), $childType));
         }
 
         $tokenizer->previousToken();
