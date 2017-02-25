@@ -1,5 +1,5 @@
 
-(function() {
+function processListNodes() {
   var ul = document.querySelectorAll('.treeCSS > li:not(:only-child) ul, .treeCSS ul ul');
   for (var i = 0; i < ul.length; i++) {
     var div = document.createElement('div');
@@ -11,4 +11,4 @@
       this.className = (this.className == 'drop' ? 'drop dropM' : 'drop');
     }
   }
-})();
+};

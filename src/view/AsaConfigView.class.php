@@ -52,7 +52,9 @@ class AsaConfigView {
         $result .= "<head><title>Cisco ASA config parser</title>";
         $result .= "<meta charset='UTF-8'>";
         $result .= "<link href='css/styles.css' rel='stylesheet'></head>";
-        $result .= "<body>";
+        $result .= "<script src='js/tree.js'></script>";
+        $result .= "<script src='js/tabs.js'></script>";
+        $result .= "<body onload='processListNodes()'>";
 
         return $result;
     }
@@ -61,8 +63,6 @@ class AsaConfigView {
     function getFooter() {
 
         $result = "</div>";
-        $result .= "<script src='js/tree.js'></script>";
-        $result .= "<script src='js/tabs.js'></script>";
         $result .= "</body>";
 
         return $result;
